@@ -1,19 +1,20 @@
 package mapGeist;
 
 import java.sql.*;
-import oracle.jdbc.OracleDriver;
+
+import com.mysql.jdbc.Driver;
 
 //Static access to the connection method since you don't want to instantiate an object
 //of the jdbc_controller class, you just want to receive the established connection object
 //which is created via the getConnection method.
 public class Connector {
-    public static String URL = "jdbc:mysql://localhost/:8889";
-    public static String USER = "root";
-    public static String PASS = "root";
+    public static String URL = "jdbc:mysql://localhost:8889/MapGeist";
+    public static String USER = "java";
+    public static String PASS = "Project4%";
     
     public static Connection getConnection() {
     	try {
-    		DriverManager.registerDriver(new OracleDriver());
+    		DriverManager.registerDriver(new Driver());
     		return DriverManager.getConnection(URL, USER, PASS);
     	}
     	catch (SQLException ex) {
