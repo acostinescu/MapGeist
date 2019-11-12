@@ -12,13 +12,13 @@ public class Connector {
     public static String PASS = "root";
     
     public static Connection getConnection() {
-        try {
-               DriverManager.registerDriver(new OracleDriver());
-               return DriverManager.getConnection(URL, USER, PASS);
-        }
-        catch (SQLException ex) {
-                throw new RuntimeException("Error connecting to the database", ex);
-        }
+    	try {
+    		DriverManager.registerDriver(new OracleDriver());
+    		return DriverManager.getConnection(URL, USER, PASS);
+    	}
+    	catch (SQLException ex) {
+    		throw new RuntimeException("Error connecting to the database", ex);
+    	}
     }
     
     private static Connection conn = null;
