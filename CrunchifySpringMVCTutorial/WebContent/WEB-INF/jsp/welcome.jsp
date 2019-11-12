@@ -2,7 +2,6 @@
 <head>
 <title>Spring MVC Tutorial by Crunchify - Hello World Spring MVC
 	Example</title>
-	<h1>Citation: https://crunchify.com/simplest-spring-mvc-hello-world-example-tutorial-spring-model-view-controller-tips/</h1>
 <style type="text/css">
 body {
 	background-image: url('https://cdn.crunchify.com/bg.png');
