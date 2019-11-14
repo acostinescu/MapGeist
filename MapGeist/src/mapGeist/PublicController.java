@@ -36,9 +36,4 @@ public class PublicController {
 				+ "<h3>********** Hello World, Spring MVC Tutorial" + test + "</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
 		return new ModelAndView("welcome", "message", message);
 	}
-	
-	@RequestMapping(value= {"/", "/index", "/index.jsp", "/index.html"})
-	public String index() {
-		return "index";
-	}
 }
