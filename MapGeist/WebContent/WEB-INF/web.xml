@@ -20,5 +20,6 @@
     <url-pattern>/welcome.html</url-pattern>
     <url-pattern>/welcome</url-pattern>
     <url-pattern>*.html</url-pattern>
+    <url-pattern>/CreateUser</url-pattern>
   </servlet-mapping>
 </web-app>

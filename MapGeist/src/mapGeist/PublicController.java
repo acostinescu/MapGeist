@@ -11,29 +11,24 @@ import org.springframework.web.servlet.ModelAndView;
 public class PublicController {
  
 	@RequestMapping("/welcome")
-	public ModelAndView helloWorld() {
- 
-		Connection dbConn = Connector.getConnection();
+	public ModelAndView helloWorld()
+	{
 		
-		int test = 0;
-		
-		try
-		{
-			Statement stmt = dbConn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Test");
-		
-			if(rs.next())
-			{
-				test = rs.getInt("Test");
-			}
-		}
-		catch (SQLException ex)
-		{
-			throw new RuntimeException("Whoops.", ex);
-		}
 		
 		String message = "<br><div style='text-align:center;'>"
-				+ "<h3>********** Hello World, Spring MVC Tutorial" + test + "</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
+				+ "<h3>********** Hello World, Spring MVC Tutorial</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
+		return new ModelAndView("welcome", "message", message);
+	}
+	
+	@RequestMapping("/CreateUser")
+	public ModelAndView createUser()
+	{
+		Moderator mod = new Moderator("ttesterson2", "1234", "Test", "Testerson");
+		
+		ModeratorDAO testDAO = new ModeratorDAO();
+		testDAO.insertModerator(mod);
+		
+		String message = "<h1>Created user: " + mod.getFullName() + "</h1>";
 		return new ModelAndView("welcome", "message", message);
 	}
 }
