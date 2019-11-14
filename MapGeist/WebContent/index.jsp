@@ -31,6 +31,14 @@
         'maxWidth': '500',
         'className' : 'custom'
     }
+    var domelem = document.createElement('a');
+    domelem.href = "#point_555_444";
+    domelem.innerHTML = "Click me";
+    domelem.onclick =  function myfunction(){
+       
+       }
+    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(mymap);
   </script>
+  <script type = 'text/javascript'> var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(mymap)</script>
 </body>
 </html>
