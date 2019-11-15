@@ -108,8 +108,6 @@ public class ModeratorDAO
 	        ps.setString(4, mod.getFirstName());
 	        ps.setString(5, mod.getLastName());
 	        
-	        System.out.println("\n\n\n\n" + mod.getLastName() + " \n" + ps.toString());
-	        
 	        int success = ps.executeUpdate();
 	        
 	        if(success == 1)
