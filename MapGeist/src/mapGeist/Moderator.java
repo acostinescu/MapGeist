@@ -26,6 +26,14 @@ public class Moderator
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+	public Moderator(UUID id, String username, String password, String firstName, String lastName)
+	{
+		this.id = id;
+		this.username = username;
+		this.password = Maptilities.encryptPassword(password, this.getSalt());
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 	
 	public UUID getID()
 	{
@@ -34,6 +42,10 @@ public class Moderator
 	public void setID(String id)
 	{
 		this.id = UUID.fromString(id);
+	}
+	public void setID(UUID id)
+	{
+		this.id = id;
 	}
 	public String getUsername()
 	{

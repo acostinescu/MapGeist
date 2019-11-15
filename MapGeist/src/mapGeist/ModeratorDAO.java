@@ -83,7 +83,8 @@ public class ModeratorDAO
 	{
 		Connection conn = Connector.getConnection();
 		
-		try {
+		try
+		{
 	        Statement stmt = conn.createStatement();
 	        int success = stmt.executeUpdate("DELETE FROM Moderator WHERE id=" + id.toString());
 	        if(success == 1)
@@ -125,15 +126,15 @@ public class ModeratorDAO
 		Connection conn = Connector.getConnection();
 		
 		try {
-	        PreparedStatement ps = conn.prepareStatement("UPDATE user SET username=?, password=?, firstName=?, lastName=? WHERE id=?");
-	        ps.setString(1, mod.getUsername());
-	        ps.setString(2, mod.getPassword());
-	        ps.setString(3, mod.getFirstName());
-	        ps.setString(4, mod.getLastName());
+	        PreparedStatement stmt = conn.prepareStatement("UPDATE Moderator SET username=?, password=?, firstName=?, lastName=? WHERE id=?");
+	        stmt.setString(1, mod.getUsername());
+	        stmt.setString(2, mod.getPassword());
+	        stmt.setString(3, mod.getFirstName());
+	        stmt.setString(4, mod.getLastName());
 	        
-	        ps.setString(5, mod.getID().toString());
+	        stmt.setString(5, mod.getID().toString());
 	        
-	        int success = ps.executeUpdate();
+	        int success = stmt.executeUpdate();
 	        if(success == 1)
 	        {
 	        	return true;
@@ -141,20 +142,17 @@ public class ModeratorDAO
 	    } catch (SQLException ex) {
 	        ex.printStackTrace();
 	    }
-		
 		return false;
 	}
 	
 	private Moderator extractModerator(ResultSet rs) throws SQLException
 	{
-		Moderator mod = new Moderator();
-		
-		mod.setID(rs.getString("id"));
-		mod.setUsername(rs.getString("username"));
-		mod.setPassword(rs.getString("password"));
-		mod.setFirstName(rs.getString("firstName"));
-		mod.setLastName(rs.getString("lastName"));
-		
-		return mod;
+		UUID id = UUID.fromString(rs.getString("id"));
+		String username = rs.getString("username");
+		String password = rs.getString("password");
+		String firstName = rs.getString("firstName");
+		String lastName = rs.getString("lastName");
+
+		return new Moderator(id, username, password, firstName, lastName);
 	}
 }
