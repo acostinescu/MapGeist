@@ -16,8 +16,8 @@ public class Maptilities
 			MessageDigest md = MessageDigest.getInstance("SHA-256"); 
 			byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
 			
-			// Convert byte array into signum representation  
-	        BigInteger number = new BigInteger(1, hash);  
+			// Convert byte array into signum representation
+	        BigInteger number = new BigInteger(1, hash);
 	  
 	        // Convert message digest into hex value  
 	        StringBuilder hexString = new StringBuilder(number.toString(16));  

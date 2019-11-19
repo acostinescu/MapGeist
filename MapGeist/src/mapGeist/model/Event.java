@@ -1,4 +1,4 @@
-package mapGeist;
+package mapGeist.model;
 
 import java.util.Date;
 import java.util.UUID;

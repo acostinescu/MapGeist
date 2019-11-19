@@ -1,0 +1,30 @@
+*
+{
+	box-sizing:border-box;
+}
+html,
+body
+{
+	width:100%;
+	padding:0;
+	margin:0;
+}
+html
+{
+	height:100%;
+	font-size:16px;
+}
+body
+{
+	min-height:100%;
+	font-size:100%;
+}
+.page-container
+{
+	width:100%;
+	max-width:1600px;
+	margin:0 auto;
+	display:flex;
+	flex-direction:row;
+	padding:0 1em;
+}

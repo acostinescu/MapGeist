@@ -1,8 +1,8 @@
-package mapGeist;
+package mapGeist.model;
 
 import java.sql.*;
 
-import com.mysql.jdbc.Driver;
+import com.mysql.cj.jdbc.Driver;
 
 //Static access to the connection method since you don't want to instantiate an object
 //of the jdbc_controller class, you just want to receive the established connection object

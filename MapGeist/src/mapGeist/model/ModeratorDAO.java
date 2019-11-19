@@ -1,19 +1,23 @@
-package mapGeist;
+package mapGeist.model;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import mapGeist.Maptilities;
+
 public class ModeratorDAO
 {
-	public Moderator getModerator(UUID id)
+	public static Moderator getModerator(UUID id)
 	{
 		Connection conn = Connector.getConnection();
 		try
 		{
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Moderator WHERE id=" + id.toString());
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Moderator WHERE id=?");
+			stmt.setString(1, id.toString());
+			
+			ResultSet rs = stmt.executeQuery();
 			if(rs.next())
 			{
 				return extractModerator(rs);
@@ -23,13 +27,14 @@ public class ModeratorDAO
 		}
 		return null;
 	}
-	public Moderator getModerator(String username)
+	public static Moderator getModerator(String username)
 	{
 		Connection conn = Connector.getConnection();
 		try
 		{
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Moderator WHERE username=" + username);
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Moderator WHERE username=?");
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
 			if(rs.next())
 			{
 				return extractModerator(rs);
@@ -40,7 +45,7 @@ public class ModeratorDAO
 		return null;
 	}
 	
-	public List<Moderator> getAllModerators()
+	public static List<Moderator> getAllModerators()
 	{
 		Connection conn = Connector.getConnection();
 		try
@@ -65,13 +70,14 @@ public class ModeratorDAO
 		return null;
 	}
 	
-	public Moderator attemptLogin(String username, String password)
+	public static Moderator attemptLogin(String username, String password)
 	{
 		Moderator logMeIn = getModerator(username);
 		if(logMeIn != null)
 		{
 			String encryptedPassword = Maptilities.encryptPassword(password, logMeIn.getSalt());
-			if(encryptedPassword == logMeIn.getPassword())
+			
+			if(encryptedPassword.equals(logMeIn.getPassword()))
 			{
 				return logMeIn;
 			}
@@ -79,7 +85,7 @@ public class ModeratorDAO
 		return null;
 	}
 	
-	public boolean deleteModerator(UUID id)
+	public static boolean deleteModerator(UUID id)
 	{
 		Connection conn = Connector.getConnection();
 		
@@ -97,7 +103,7 @@ public class ModeratorDAO
 	    return false;
 	}
 	
-	public boolean insertModerator(Moderator mod)
+	public static boolean insertModerator(Moderator mod)
 	{
 		Connection conn = Connector.getConnection();
 		
@@ -121,7 +127,7 @@ public class ModeratorDAO
 	    return false;
 	}
 	
-	public boolean updateModerator(Moderator mod)
+	public static boolean updateModerator(Moderator mod)
 	{
 		Connection conn = Connector.getConnection();
 		
@@ -145,9 +151,9 @@ public class ModeratorDAO
 		return false;
 	}
 	
-	private Moderator extractModerator(ResultSet rs) throws SQLException
+	private static Moderator extractModerator(ResultSet rs) throws SQLException
 	{
-		UUID id = UUID.fromString(rs.getString("id"));
+		String id = rs.getString("id");
 		String username = rs.getString("username");
 		String password = rs.getString("password");
 		String firstName = rs.getString("firstName");

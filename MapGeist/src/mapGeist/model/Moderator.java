@@ -1,11 +1,13 @@
-package mapGeist;
+package mapGeist.model;
 
 import java.util.UUID;
+
+import mapGeist.Maptilities;
 
 
 public class Moderator
 {
-	private UUID id;
+	private String id;
 	private String username;
 	private String password;
 	private String firstName;
@@ -19,31 +21,28 @@ public class Moderator
 	public Moderator(String username, String password, String firstName, String lastName)
 	{
 		// Generate random UUID
-		this.id = UUID.randomUUID();
+		this.id = UUID.randomUUID().toString();
 		
 		this.username = username;
 		this.password = Maptilities.encryptPassword(password, this.getSalt());
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-	public Moderator(UUID id, String username, String password, String firstName, String lastName)
+
+	public Moderator(String id, String username, String encryptedPassword, String firstName, String lastName)
 	{
 		this.id = id;
 		this.username = username;
-		this.password = Maptilities.encryptPassword(password, this.getSalt());
+		this.password = encryptedPassword;
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
 	
-	public UUID getID()
+	public String getID()
 	{
 		return this.id;
 	}
 	public void setID(String id)
-	{
-		this.id = UUID.fromString(id);
-	}
-	public void setID(UUID id)
 	{
 		this.id = id;
 	}
