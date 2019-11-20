@@ -1,6 +1,7 @@
 package mapGeist.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,5 +34,12 @@ public class PublicController {
 		
 		String message = "<h1>Created user: " + mod.getFullName() + "</h1>";
 		return new ModelAndView("welcome", "message", message);
+	}
+	
+	@RequestMapping("/AddEvent")
+	public String addEvent(@RequestParam("EventName") String eventName)
+	{
+		System.out.println(eventName);
+		return "index";
 	}
 }

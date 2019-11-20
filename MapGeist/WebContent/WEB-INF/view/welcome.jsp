@@ -1,17 +1,15 @@
-<html>
-<head>
-<title>Spring MVC Tutorial by Crunchify - Hello World Spring MVC
-	Example</title>
-<style type="text/css">
-body {
-	background-image: url('https://cdn.crunchify.com/bg.png');
-}
-</style>
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 
-	<div>${message}</div>
+<html>
+	<head>
+		<title>MapGeist - Welcome</title>
+		<link rel="stylesheet" href="<c:url value="/resources/styles/styles.css"  />" />
+	</head>
+	<body>
 	
-	<a href="CreateUser">Create User</a>
-</body>
+		<div>${message}</div>
+		
+		<a href="CreateUser">Create User</a>
+	</body>
 </html>

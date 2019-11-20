@@ -6,6 +6,7 @@ html,
 body
 {
 	width:100%;
+	height:100%;
 	padding:0;
 	margin:0;
 }
@@ -16,15 +17,177 @@ html
 }
 body
 {
-	min-height:100%;
 	font-size:100%;
+	font-family:Helvetica-Neue, Sans-Serif;
+}
+.flex-body
+{
+	display:flex;
+	flex-direction:column;
+}
+.body__center
+{
+	align-items:center;
+	justify-content:center;
 }
 .page-container
 {
+	height:100%;
 	width:100%;
-	max-width:1600px;
-	margin:0 auto;
 	display:flex;
 	flex-direction:row;
-	padding:0 1em;
 }
+
+.mapgeist--logo
+{
+	width:7rem;
+	position:absolute;
+	top:2rem;
+	right:2rem;
+	display:block;
+	z-index:401;
+}
+
+/* LOGIN FORM */
+.body__login
+{
+	position:relative;
+	
+}
+.login--bg
+{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:0;
+	background:url(../images/login-bg.png);
+	background-size:cover;
+	background-position:center center;
+	filter:blur(2px);
+}
+.login
+{
+	position:relative;
+	z-index:1;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	
+	width:100%;
+	max-width:32rem;
+	padding:4rem 3rem;
+	background:#f3f3f3;
+	border:0.0625rem solid #ddd;
+	border-radius:0.125rem;
+	
+	-webkit-box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.15);
+	-moz-box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.15);
+	box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.15);
+}
+.login--header
+{
+	font-weight:200;
+	font-size:2rem;
+	margin:0 0 3rem;
+	color:#333;
+}
+.login--form
+{
+	display:flex;
+	flex-direction:column;
+	width:100%;
+}
+.login--form-item
+{
+	position:relative;
+	z-index:1;
+	
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+	-webkit-appearance:none;
+	
+	font-size:1.125rem;
+	font-weight:300;
+	
+	width:100%;
+	height:3em;
+	margin:0 0 -0.0625rem;
+	padding:0 0.75em;
+	
+	border:0.0625rem solid #ddd;
+	background:#fff;
+}
+.login--form-item:first-of-type
+{
+	border-radius:0.125rem 0.125rem 0 0;
+}
+.login--form-item:last-of-type
+{
+	margin-bottom:0;
+	border-radius:0 0 0.125rem 0.125rem;
+}
+.login--form-item:focus
+{
+	z-index:2;
+	outline-color:#228b22;
+}
+.login--submit
+{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+	justify-content:center;
+	-webkit-appearance:none;
+	
+	font-size:1.125rem;
+	width:100%;
+	text-align:center;
+	height:3em;
+	cursor:pointer;
+	margin:1em 0 0;
+	
+	background:#228b22;
+	border:0.0625rem solid #355e3b;
+	border-radius:0.125rem;
+	color:#fff;
+	font-weight:300;
+}
+.login--submit:hover
+{
+	background:#355e3b;
+}
+
+/* END LOGIN FORM */
+
+/* MAPS */
+.map-container
+{
+	flex:3;
+	position:relative;
+	height:100%;
+}
+.leaflet-container
+{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+}
+.sidebar
+{
+	flex:1;
+	background:#fff;
+	padding:1em;
+	position:relative;
+	z-index:401;
+	
+	-webkit-box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.15);
+}
+
+/* END MAPS */

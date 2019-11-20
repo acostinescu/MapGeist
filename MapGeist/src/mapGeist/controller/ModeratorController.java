@@ -2,11 +2,16 @@ package mapGeist.controller;
 
 import mapGeist.model.*;
 
+import java.util.Collection;
 import java.util.Optional;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,24 +19,41 @@ import org.springframework.web.servlet.ModelAndView;
 public class ModeratorController
 {	
 	@RequestMapping(value="/moderator/home")
-	public ModelAndView moderatorHome(@RequestParam("message") String message)
+	public ModelAndView moderatorHome(@RequestParam(value="message", required=false) Optional<String> message, HttpServletRequest request)
 	{
-		return new ModelAndView("/moderator/home", "message", message);
+		Moderator mod = (Moderator)request.getSession().getAttribute("loggedInUser");
+		if(mod != null)
+		{
+			if(message.isPresent())
+			{
+				return new ModelAndView("/moderator/home", "message", message);
+			}
+			else
+			{
+				return new ModelAndView("/moderator/home");
+			}
+		}
+		else
+		{
+			return new ModelAndView("login", "error", "Get the fuck out, hacker boi!");
+		}
 	}
-	
 	
 	@RequestMapping(value="/login")
 	public ModelAndView login(
 			@RequestParam(value="username", required=false) Optional<String>  username, 
-			@RequestParam(value="password", required=false) Optional<String> password)
+			@RequestParam(value="password", required=false) Optional<String> password,
+			HttpServletRequest request)
 	{
-		if(!(username.isEmpty() || password.isEmpty()))
+		if(username.isPresent() && password.isPresent())
 		{
 			Moderator toAuth = ModeratorDAO.attemptLogin(username.get(), password.get());
 			if(toAuth != null)
 			{
+				request.getSession().setAttribute("loggedInUser", toAuth);
+				
 				// TODO: Create authentication token
-				return new ModelAndView("redirect: moderator/home", "message", toAuth.getFullName());
+				return new ModelAndView("redirect: moderator/home", "message", "Welcome, " + toAuth.getFullName());
 			}
 			else
 			{
