@@ -2,14 +2,15 @@ package mapGeist.model;
 
 import java.util.Date;
 import java.util.UUID;
+import java.sql.Timestamp;
 
 public class Event
 {
 	private UUID id;
     private String title;
     private String description;
-    private Date startTime;
-    private Date endTime; 
+    private Timestamp startTime;
+    private Timestamp endTime; 
     private String location;
     private float longitude;
     private float latitude;
@@ -20,7 +21,7 @@ public class Event
     private Date dateReviewed;
     private UUID reviewedBy;
     
-    public Event(String title, String description, Date startTime, Date endTime, String location, float longitude, float latitude, String emailAddr, Date dateSubmitted)
+    public Event(String title, String description, Timestamp startTime, Timestamp endTime, String location, float longitude, float latitude, String emailAddr, Date dateSubmitted)
     {
         
         this.id = UUID.randomUUID();
@@ -38,7 +39,8 @@ public class Event
         this.dateReviewed = null;
         this.reviewedBy = null;
     }
-    public Event(UUID id, String title, String description, Date startTime, Date endTime, String location, float longitude, float latitude, String emailAddr, Date dateSubmitted, boolean queued, Boolean approved, Date dateReviewed, UUID reviewedBy)
+    
+    public Event(UUID id, String title, String description, Timestamp startTime, Timestamp endTime, String location, float longitude, float latitude, String emailAddr, Date dateSubmitted, boolean queued, Boolean approved, Date dateReviewed, UUID reviewedBy)
     {
         
         this.id = id;
@@ -89,7 +91,7 @@ public class Event
     {
         return this.startTime;
     }
-    public void setStartTime(Date startTime)
+    public void setStartTime(Timestamp startTime)
     {
     	this.startTime = startTime;
     }
@@ -97,7 +99,7 @@ public class Event
     {
         return this.endTime;
     }
-    public void setEndTime(Date endTime)
+    public void setEndTime(Timestamp endTime)
     {
     	this.endTime = endTime;
     }

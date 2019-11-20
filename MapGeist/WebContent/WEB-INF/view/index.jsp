@@ -42,28 +42,28 @@
 	<body>
 	<h1 style="text-align:center">Welcome To MapGeist!</h1>
 	<div id = "input-container">
-		<form action= "<c:url value="/AddEvent" />" method="GET">
-		  Event Title: <input type="text" name="EventName"><br><br>
-		  Event Description: <input type="text" name="Description"><br><br>
-		  Event Location: <input type="text" name="Location"><br><br>
-		  Event Start Time: <input type="date" name="StartTime"><br><br>
-		  Event End Time: <input type="date" name="EndTime"><br><br>
-		  Longitude: <input type="text" id="longitude"><br><br>
-		  Latitude: <input type="text" id="Latitude"><br><br>
-		  Email Address: <input type="text" id="email"><br><br>
-		  <input type="submit" value="Submit">
+		<form action="<c:url value="/NewEventSubmit" />" method="POST">
+			Event Title: <input type="text" name="Title"><br><br>
+			Event Description: <input type="text" name="Description"><br><br>
+			Event Location: <input type="text" name="Location"><br><br>
+			Event Start Time: <input type="datetime-local" name="StartTime"><br><br>
+			Event End Time: <input type="datetime-local" name="EndTime"><br><br>
+			Longitude: <input type="text" name="Longitude"><br><br>
+			Latitude: <input type="text" name="Latitude"><br><br>
+			Email Address: <input type="text" name="Email"><br><br>
+			<input type="submit" value="Submit">
 		</form>
 	</div>
 	<div id = "map-container">
 		<div id="mapid"></div>
 	</div>
 	  <script>
-	  var mymap = L.map('mapid').setView([40.006463, -105.265991], 15);
-	 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibHVzdzYxMjYiLCJhIjoiY2oxbDdxc3BxMDAwcTMybDI2M28wM3VnaiJ9.2Oop3pz_TvNkmyOBvWWA7A', {
+	  	var mymap = L.map('mapid').setView([40.006463, -105.265991], 15);
+	 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibHVzdzYxMjYiLCJhIjoiY2oxbDdxc3BxMDAwcTMybDI2M28wM3VnaiJ9.2Oop3pz_TvNkmyOBvWWA7A', {
 	        maxZoom: 18,
 	        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
 	            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-	            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	            'Imagery ï¿½ <a href="http://mapbox.com">Mapbox</a>',
 	        id: 'mapbox.streets'
 	    }).addTo(mymap);
 	    var customOptions = {
