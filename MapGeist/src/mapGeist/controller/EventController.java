@@ -5,8 +5,12 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import mapGeist.model.*;
 
@@ -15,17 +19,20 @@ import mapGeist.model.EventDAO;
 
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@Controller
+@RestController 
 public class EventController {
 	
 	@RequestMapping(value = "/NewEventSubmit", method = { RequestMethod.POST  })
@@ -46,22 +53,41 @@ public class EventController {
 		System.out.println(StartTimeStamp);
 		
 		System.out.println(EndTime.get());
-		LocalDateTime endTime = LocalDateTime.parse(StartTime.get());		
+		LocalDateTime endTime = LocalDateTime.parse(EndTime.get());		
 		Timestamp EndTimeStamp = Timestamp.valueOf(endTime);
 		System.out.println(EndTimeStamp);
 		
-//	public Event(String title, String description, TimeStamp startTime, Date endTime, String location, float longitude, float latitude, String emailAddr, Date dateSubmitted)
 		Date todaysDate = new Date();
-		float latitude = new Float(Latitude.get());
-		float longitude = new Float(Longitude.get());
+		double latitude = Double.parseDouble(Latitude.get());
+		double longitude = Double.parseDouble(Longitude.get());
 		System.out.println(latitude);
 		System.out.println(longitude);
 		
 		Event NewEvent = new Event(Title.get(), Description.get(), StartTimeStamp, EndTimeStamp, Location.get(), latitude, longitude, Email.get(), todaysDate);
-		EventDAO eventDAO = new EventDAO();
-		eventDAO.insertEvent(NewEvent);
+	 EventDAO.insertEvent(NewEvent);
 		return;
 	}
 	
+	@RequestMapping(value="/Event/active", method= {RequestMethod.GET}, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<String> getAllActiveEvents()
+	{
+		List<Event> eventList = EventDAO.getAllEvents();
+		
+		List<Map<String, String>> response = new ArrayList<Map<String, String>>();
+		
+		for(Event e : eventList)
+		{
+			Map<String, String> eventMap = new HashMap<String, String>();
+			
+			eventMap.put("title", e.getTitle());
+			eventMap.put("description", e.getDescription());
+			
+			response.add(eventMap);
+		}
+		
+		
+		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+	}
 	
 }

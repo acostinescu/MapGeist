@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class EventDAO
 {
-	public Event getEvent(UUID id)
+	public static Event getEvent(UUID id)
 	{
 		Connection conn = Connector.getConnection();
 		
@@ -26,7 +26,7 @@ public class EventDAO
 		return null;
 	}
 	
-	public List<Event> getAllEvents()
+	public static List<Event> getAllEvents()
 	{
 		Connection conn = Connector.getConnection();
 		try
@@ -51,7 +51,7 @@ public class EventDAO
 		return null;
 	}
 	
-	public List<Event> getAllActiveEvents()
+	public static List<Event> getAllActiveEvents()
 	{
 		Connection conn = Connector.getConnection();
 		try
@@ -76,7 +76,7 @@ public class EventDAO
 		return null;
 	}
 	
-	public boolean deleteEvent(UUID id)
+	public static boolean deleteEvent(UUID id)
 	{
 		Connection conn = Connector.getConnection();
 		
@@ -94,7 +94,7 @@ public class EventDAO
 		return false;
 	}
 	
-    public boolean insertEvent(Event eve)
+    public static boolean insertEvent(Event eve)
     {
     	Connection conn = Connector.getConnection();
 
@@ -111,8 +111,8 @@ public class EventDAO
             stmt.setTimestamp(4, new java.sql.Timestamp(eve.getStartTime().getTime()));
             stmt.setTimestamp(5, new java.sql.Timestamp(eve.getEndTime().getTime()));
             stmt.setString(6, eve.getLocation());
-            stmt.setFloat(7, eve.getLongitude());
-            stmt.setFloat(8, eve.getLatitude());
+            stmt.setDouble(7, eve.getLongitude());
+            stmt.setDouble(8, eve.getLatitude());
             stmt.setString(9, eve.getEmailAddress());
             stmt.setDate(10, new java.sql.Date(eve.getDateSubmitted().getTime()));
            
@@ -130,7 +130,7 @@ public class EventDAO
         return false;
     }
     
-    public boolean updateEvent(Event eve)
+    public static boolean updateEvent(Event eve)
     {
     	Connection conn = Connector.getConnection();
     	try {
@@ -140,8 +140,8 @@ public class EventDAO
             stmt.setDate(3, new java.sql.Date(eve.getStartTime().getTime()));
             stmt.setDate(4, new java.sql.Date(eve.getEndTime().getTime()));
             stmt.setString(5, eve.getLocation());
-            stmt.setFloat(6, eve.getLongitude());
-            stmt.setFloat(7, eve.getLatitude());
+            stmt.setDouble(6, eve.getLongitude());
+            stmt.setDouble(7, eve.getLatitude());
             stmt.setString(8, eve.getEmailAddress());
             stmt.setDate(9, new java.sql.Date(eve.getDateSubmitted().getTime()));
             stmt.setBoolean(10, eve.isQueued());
@@ -162,7 +162,7 @@ public class EventDAO
     	return false;
     }
     
-    private Event extractEvent(ResultSet rs) throws SQLException
+    private static Event extractEvent(ResultSet rs) throws SQLException
     {
     	String idString = rs.getString("id");
     	UUID id = UUID.fromString(idString);
@@ -172,8 +172,8 @@ public class EventDAO
     	java.sql.Timestamp startTime = rs.getTimestamp("startTime");
     	java.sql.Timestamp endTime = rs.getTimestamp("endTime");
     	String location = rs.getString("location");
-    	float longitude = rs.getFloat("longitude");
-    	float latitude = rs.getFloat("latitude");
+    	double longitude = rs.getDouble("longitude");
+    	double latitude = rs.getDouble("latitude");
     	String emailAddress = rs.getString("emailAddress");
     	java.util.Date dateSubmitted = rs.getDate("dateSubmitted");
     	boolean queued = rs.getBoolean("queued");

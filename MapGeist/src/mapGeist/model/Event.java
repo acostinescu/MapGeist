@@ -12,8 +12,8 @@ public class Event
     private Timestamp startTime;
     private Timestamp endTime; 
     private String location;
-    private float longitude;
-    private float latitude;
+    private double longitude;
+    private double latitude;
     private String emailAddress;
     private Date dateSubmitted;
     private Boolean queued; 
@@ -21,7 +21,7 @@ public class Event
     private Date dateReviewed;
     private UUID reviewedBy;
     
-    public Event(String title, String description, Timestamp startTime, Timestamp endTime, String location, float longitude, float latitude, String emailAddr, Date dateSubmitted)
+    public Event(String title, String description, Timestamp startTime, Timestamp endTime, String location, double longitude, double latitude, String emailAddr, Date dateSubmitted)
     {
         
         this.id = UUID.randomUUID();
@@ -40,7 +40,7 @@ public class Event
         this.reviewedBy = null;
     }
     
-    public Event(UUID id, String title, String description, Timestamp startTime, Timestamp endTime, String location, float longitude, float latitude, String emailAddr, Date dateSubmitted, boolean queued, Boolean approved, Date dateReviewed, UUID reviewedBy)
+    public Event(UUID id, String title, String description, Timestamp startTime, Timestamp endTime, String location, double longitude, double latitude, String emailAddr, Date dateSubmitted, boolean queued, Boolean approved, Date dateReviewed, UUID reviewedBy)
     {
         
         this.id = id;
@@ -111,19 +111,19 @@ public class Event
     {
     	this.location = location;
     }
-    public float getLongitude()
+    public double getLongitude()
     {
         return this.longitude;
     }    
-    public void getLongitude(float longitude)
+    public void getLongitude(double longitude)
     {
     	this.longitude = longitude;
     }
-    public float getLatitude()
+    public double getLatitude()
     {
         return this.latitude;
     }
-    public void setLatitude(float latitude)
+    public void setLatitude(double latitude)
     {
     	this.latitude = latitude;
     }

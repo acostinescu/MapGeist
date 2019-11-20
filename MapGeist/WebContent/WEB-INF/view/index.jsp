@@ -40,44 +40,70 @@
 		   crossorigin=""></script>
 	</head>
 	<body>
-	<h1 style="text-align:center">Welcome To MapGeist!</h1>
-	<div id = "input-container">
-		<form action="<c:url value="/NewEventSubmit" />" method="POST">
-			Event Title: <input type="text" name="Title"><br><br>
-			Event Description: <input type="text" name="Description"><br><br>
-			Event Location: <input type="text" name="Location"><br><br>
-			Event Start Time: <input type="datetime-local" name="StartTime"><br><br>
-			Event End Time: <input type="datetime-local" name="EndTime"><br><br>
-			Longitude: <input type="text" name="Longitude"><br><br>
-			Latitude: <input type="text" name="Latitude"><br><br>
-			Email Address: <input type="text" name="Email"><br><br>
-			<input type="submit" value="Submit">
-		</form>
-	</div>
-	<div id = "map-container">
-		<div id="mapid"></div>
-	</div>
-	  <script>
-	  	var mymap = L.map('mapid').setView([40.006463, -105.265991], 15);
-	 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibHVzdzYxMjYiLCJhIjoiY2oxbDdxc3BxMDAwcTMybDI2M28wM3VnaiJ9.2Oop3pz_TvNkmyOBvWWA7A', {
-	        maxZoom: 18,
-	        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-	            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-	            'Imagery � <a href="http://mapbox.com">Mapbox</a>',
-	        id: 'mapbox.streets'
-	    }).addTo(mymap);
-	    var customOptions = {
-	        'maxWidth': '500',
-	        'className' : 'custom'
-	    }
-	    var domelem = document.createElement('a');
-	    domelem.href = "#point_555_444";
-	    domelem.innerHTML = "Click me";
-	    domelem.onclick =  function myfunction(){
-	       
-	       }
-	    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(mymap);
-	  </script>
-	  <script type = 'text/javascript'> var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(mymap)</script>
+		<h1 style="text-align:center">Welcome To MapGeist!</h1>
+		<div id = "input-container">
+			<form action="<c:url value="/NewEventSubmit" />" method="POST">
+				Event Title: <input type="text" name="Title"><br><br>
+				Event Description: <input type="text" name="Description"><br><br>
+				Event Location: <input type="text" name="Location"><br><br>
+				Event Start Time: <input type="datetime-local" name="StartTime"><br><br>
+				Event End Time: <input type="datetime-local" name="EndTime"><br><br>
+				Email Address: <input type="text" name="Email"><br><br>
+				<input type="submit" value="Submit">
+				
+				
+				<input type="hidden" id="Longitude" name="Longitude">
+				<input type="hidden" id="Latitude" name="Latitude">
+			</form>
+		</div>
+		
+		<div id="test"></div>
+		
+		<div id = "map-container">
+			<div id="mapid"></div>
+		</div>
+		
+		<c:url var="activeEvents" value="/Event/active" ></c:url>
+		
+	  	<script type="text/javascript">
+		  	var mymap = L.map('mapid').setView([40.006463, -105.265991], 15);
+		 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibHVzdzYxMjYiLCJhIjoiY2oxbDdxc3BxMDAwcTMybDI2M28wM3VnaiJ9.2Oop3pz_TvNkmyOBvWWA7A', {
+		        maxZoom: 18,
+		        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+		            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+		            'Imagery � <a href="http://mapbox.com">Mapbox</a>',
+		        id: 'mapbox.streets'
+		    }).addTo(mymap);
+		    var customOptions = {
+		        'maxWidth': '500',
+		        'className' : 'custom'
+		    }
+		    var domelem = document.createElement('a');
+		    domelem.href = "#point_555_444";
+		    domelem.innerHTML = "Click me";
+		    
+		    function onMapClick(e){
+		    	console.log("Map clicked @" + e.latlng);
+		    	document.getElementById("Longitude").value = e.latlng.lng;
+		    	document.getElementById("Latitude").value = e.latlng.lat;
+		    }
+		    
+		    mymap.on("click", onMapClick);
+		    
+		    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(mymap);
+		    
+		    
+		    
+		    
+		    var xhttp = new XMLHttpRequest();
+		    xhttp.onreadystatechange = function(){
+		    	if (this.readyState == 4 && this.status == 200) {
+		    	     document.getElementById("test").innerHTML = this.responseText;
+	    	    }
+		    }
+		    xhttp.open("GET", "${activeEvents}", true);
+		    xhttp.send();
+		    
+	  	</script>
 	</body>
 </html>
