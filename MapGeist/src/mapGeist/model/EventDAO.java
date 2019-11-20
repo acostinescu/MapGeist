@@ -3,8 +3,10 @@ package mapGeist.model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.Date;
+import java.util.HashMap;
 
 public class EventDAO
 {
@@ -193,4 +195,5 @@ public class EventDAO
 
     	return eve;
     }
+    
 }

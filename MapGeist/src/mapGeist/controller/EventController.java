@@ -17,7 +17,8 @@ import mapGeist.model.*;
 import mapGeist.model.Event;
 import mapGeist.model.EventDAO;
 
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +64,7 @@ public class EventController {
 		System.out.println(latitude);
 		System.out.println(longitude);
 		
-		Event NewEvent = new Event(Title.get(), Description.get(), StartTimeStamp, EndTimeStamp, Location.get(), latitude, longitude, Email.get(), todaysDate);
+		Event NewEvent = new Event(Title.get(), Description.get(), StartTimeStamp, EndTimeStamp, Location.get(), longitude, latitude, Email.get(), todaysDate);
 	 EventDAO.insertEvent(NewEvent);
 		return;
 	}
@@ -72,20 +73,7 @@ public class EventController {
 	@ResponseBody
 	public ResponseEntity<String> getAllActiveEvents()
 	{
-		List<Event> eventList = EventDAO.getAllEvents();
-		
-		List<Map<String, String>> response = new ArrayList<Map<String, String>>();
-		
-		for(Event e : eventList)
-		{
-			Map<String, String> eventMap = new HashMap<String, String>();
-			
-			eventMap.put("title", e.getTitle());
-			eventMap.put("description", e.getDescription());
-			
-			response.add(eventMap);
-		}
-		
+		JSONArray response = Event.getEventsJson();
 		
 		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
 	}

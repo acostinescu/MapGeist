@@ -90,19 +90,29 @@
 		    
 		    mymap.on("click", onMapClick);
 		    
-		    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(mymap);
-		    
+		    var marker = L.marker(["40.006463", "-105.265991"]).bindPopup(domelem).addTo(mymap);   
 		    
 		    
 		    
 		    var xhttp = new XMLHttpRequest();
 		    xhttp.onreadystatechange = function(){
 		    	if (this.readyState == 4 && this.status == 200) {
-		    	     document.getElementById("test").innerHTML = this.responseText;
+		    		var eventArr = JSON.parse(this.responseText);
+		    		addEventMarkers(eventArr);
+		    	     
 	    	    }
 		    }
 		    xhttp.open("GET", "${activeEvents}", true);
 		    xhttp.send();
+		    
+		    function addEventMarkers(eventArr){
+		    	var out = "";
+		    	var i;
+		    	for(i = 0; i < eventArr.length; i++){
+		    		
+		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).bindPopup(domelem).addTo(mymap);
+		    	}
+		    }
 		    
 	  	</script>
 	</body>

@@ -1,8 +1,19 @@
 package mapGeist.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.Timestamp;
+import java.text.DateFormat;  
+import java.text.SimpleDateFormat;  
+import java.util.Calendar;
 
 public class Event
 {
@@ -175,4 +186,39 @@ public class Event
         this.approved = false;
         this.dateReviewed = new Date();
     }
+    public static JSONArray getEventsJson()
+	{
+		List<Event> eventList = EventDAO.getAllEvents();
+		String pattern = "MM/dd/yyyy HH:mm:ss";
+		
+		JSONArray response = new JSONArray();
+		
+		for(Event e : eventList)
+		{
+			JSONObject eventMap = new JSONObject();
+			
+			DateFormat df = new SimpleDateFormat(pattern);
+			
+			
+			eventMap.put("id", e.getID().toString());
+			eventMap.put("title", e.getTitle());
+			eventMap.put("description", e.getDescription());
+			eventMap.put("location", e.getLocation());
+			eventMap.put("latitude", Double.toString(e.getLatitude()));
+			eventMap.put("longitude", Double.toString(e.getLongitude()));
+			eventMap.put("email", e.getEmailAddress());
+			if(e.getDateReviewed() == null) 
+			{
+				eventMap.put("date_reviewed", "null");
+			}
+			else
+			{
+				eventMap.put("date_reviewed", df.format(e.getDateReviewed()));
+			}			
+			eventMap.put("date_submitted", df.format(e.getDateSubmitted()));
+			
+			response.put(eventMap);
+		}
+		return response;
+	}
 }
