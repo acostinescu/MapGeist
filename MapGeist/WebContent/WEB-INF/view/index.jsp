@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 	<title>MapGeist</title>
@@ -38,15 +39,15 @@
 <body>
 <h1 style="text-align:center">Welcome To MapGeist!</h1>
 <div id = "input-container">
-	<form action= /NewEventSubmit>
+	<form action="<c:url value="/NewEventSubmit" />" method="POST">
 	  Event Title: <input type="text" name="Title"><br><br>
 	  Event Description: <input type="text" name="Description"><br><br>
 	  Event Location: <input type="text" name="Location"><br><br>
-	  Event Start Time: <input type="date" name="StartTime"><br><br>
-	  Event End Time: <input type="date" name="EndTime"><br><br>
-	  Longitude: <input type="text" id="longitude"><br><br>
-	  Latitude: <input type="text" id="Latitude"><br><br>
-	  Email Address: <input type="text" id="email"><br><br>
+	  Event Start Time: <input type="datetime-local" name="StartTime"><br><br>
+	  Event End Time: <input type="datetime-local" name="EndTime"><br><br>
+	  Longitude: <input type="text" name="Longitude"><br><br>
+	  Latitude: <input type="text" name="Latitude"><br><br>
+	  Email Address: <input type="text" name="Email"><br><br>
 	  <input type="submit" value="Submit">
 	</form>
 </div>

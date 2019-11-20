@@ -100,23 +100,22 @@ public class EventDAO
 
         try
         {
-            String query = "INSERT INTO Event values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO Event (id, title, description, startTime, "
+            		+ "endTime, location, longitude, latitude, emailAddress, dateSubmitted)" 
+            		+ " values(?,?,?,?,?,?,?,?,?,?)";
             
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, eve.getID().toString());
             stmt.setString(2, eve.getTitle());
             stmt.setString(3, eve.getDescription());
-            stmt.setDate(4, new java.sql.Date(eve.getStartTime().getTime()));
-            stmt.setDate(5, new java.sql.Date(eve.getEndTime().getTime()));
+            stmt.setTimestamp(4, new java.sql.Timestamp(eve.getStartTime().getTime()));
+            stmt.setTimestamp(5, new java.sql.Timestamp(eve.getEndTime().getTime()));
             stmt.setString(6, eve.getLocation());
             stmt.setFloat(7, eve.getLongitude());
             stmt.setFloat(8, eve.getLatitude());
             stmt.setString(9, eve.getEmailAddress());
             stmt.setDate(10, new java.sql.Date(eve.getDateSubmitted().getTime()));
-            stmt.setBoolean(11, eve.isQueued());
-            stmt.setBoolean(12, eve.isApproved());
-            stmt.setDate(13, new java.sql.Date(eve.getDateReviewed().getTime()));
-            stmt.setString(14, eve.getReviewedBy().toString());
+           
             
             int success = stmt.executeUpdate();
             if(success == 1)
@@ -170,8 +169,8 @@ public class EventDAO
     	
     	String title = rs.getString("title");
     	String description = rs.getString("description");
-    	java.util.Date startTime = rs.getDate("startTime");
-    	java.util.Date endTime = rs.getDate("endTime");
+    	java.sql.Timestamp startTime = rs.getTimestamp("startTime");
+    	java.sql.Timestamp endTime = rs.getTimestamp("endTime");
     	String location = rs.getString("location");
     	float longitude = rs.getFloat("longitude");
     	float latitude = rs.getFloat("latitude");
