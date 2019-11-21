@@ -42,19 +42,18 @@
 	<body>
 		<h1 style="text-align:center">Welcome To MapGeist!</h1>
 		<div id = "input-container">
-			<form action="<c:url value="/NewEventSubmit" />" method="POST">
-				Event Title: <input type="text" name="Title"><br><br>
+			<form id='newEvent' action="<c:url var="newEvent" value="/NewEventSubmit" />" method="POST">
+				Event Title: <input type="text" id="Title" name="Title"><br><br>
 				Event Description: <input type="text" name="Description"><br><br>
 				Event Location: <input type="text" name="Location"><br><br>
 				Event Start Time: <input type="datetime-local" name="StartTime"><br><br>
 				Event End Time: <input type="datetime-local" name="EndTime"><br><br>
 				Email Address: <input type="text" name="Email"><br><br>
-				<input type="submit" value="Submit">
-				
-				
 				<input type="hidden" id="Longitude" name="Longitude">
-				<input type="hidden" id="Latitude" name="Latitude">
-			</form>
+				<input type="hidden" id="Latitude" name="Latitude">	
+				<input type="submit">
+				<div color="red" id="postResponseForm"></div>
+			</form>	
 		</div>
 		
 		<div id="test"></div>
@@ -104,6 +103,38 @@
 		    }
 		    xhttp.open("GET", "${activeEvents}", true);
 		    xhttp.send();
+		    
+		    //Handle the submit post by an asynchronous AJAX request.
+		    var eventForm = document.getElementById('newEvent');
+		    eventForm.onsubmit = function(event) {
+		      event.preventDefault();
+		    	
+			    var newEventHTTP = new XMLHttpRequest();
+			    
+				var eventName = document.getElementById('Title').value;
+				console.log(eventName);
+				
+			    newEventHTTP.onreadystatechange = function(){
+			    	if (this.readyState == 4 && this.status == 200) {
+			    		document.getElementById('postResponseForm').innerText="Event " + eventName + " submitted.";				    
+			    	}
+			    }
+			    
+			    var form = document.querySelector("#newEvent");
+		    	var formData = new FormData(form);
+		    	
+		    	var data = ""
+		    	
+			    for (var [key, value] of formData.entries()) { 
+					data += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+				}
+			    
+			    
+			    newEventHTTP.open('POST', "${newEvent}", /* async = */ true);
+			    newEventHTTP.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				console.log(data);
+				newEventHTTP.send(data);
+		    }
 		    
 		    function addEventMarkers(eventArr){
 		    	var out = "";

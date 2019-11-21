@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController 
 public class EventController {
 	
-	@RequestMapping(value = "/NewEventSubmit", method = { RequestMethod.POST  })
+	@RequestMapping(value = "/NewEventSubmit", method = { RequestMethod.POST })
 	@ResponseStatus(value = HttpStatus.OK)
 	public void NewEventHandler(@RequestParam(value="Title", required=false) Optional<String> Title, 
 									  @RequestParam(value="Description", required=false) Optional<String> Description,
