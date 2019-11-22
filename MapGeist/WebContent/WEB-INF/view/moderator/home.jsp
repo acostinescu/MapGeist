@@ -13,7 +13,7 @@
 		 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
 		   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
 		   crossorigin=""></script>
-	</head>
+	</head> 
 	<body>
 		
 		
@@ -21,9 +21,10 @@
 			<section class="map-container">
 				<div id="leafletMap"></div>
 				<img class="mapgeist--logo" src="<c:url value="/resources/images/logo.svg" />" />
-			</section>
+			</section> 
 			<section class="sidebar">
 				${message}
+				<a class="btn" href="<c:url value="/login?logout" />">Log out</a>
 			</section>
 		</div>
 	

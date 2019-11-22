@@ -18,11 +18,21 @@
 					<input type="text" name="username" placeholder="Username" class="login--form-item" />
 					<input type="password" name="password" placeholder="Password" class="login--form-item" />
 				</div>
-				<input type="submit" value="Log in" class="login--submit" />
+				<input type="submit" value="Log in" class="btn btn__fullwidth" />
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
 			
-			<c:if test="${error != null}">${error}</c:if>
+			<c:if test="${error != null}">
+				<div class="login--error">
+					${error}
+				</div>
+			</c:if>
+			
+			<c:if test="${param.logout ne null}">
+				<div class="login--logout-msg">
+					Successfully logged out!
+				</div>
+			</c:if>
 		</div>
 	</body>
 </html> 

@@ -19,23 +19,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class ModeratorController
 {	
 	@RequestMapping(value="/moderator/home")
-	public ModelAndView moderatorHome(@RequestParam(value="message", required=false) Optional<String> message, HttpServletRequest request)
+	public ModelAndView moderatorHome(HttpServletRequest request)
 	{
 		Moderator mod = (Moderator)request.getSession().getAttribute("loggedInUser");
 		if(mod != null)
 		{
-			if(message.isPresent())
-			{
-				return new ModelAndView("/moderator/home", "message", message);
-			}
-			else
-			{
-				return new ModelAndView("/moderator/home");
-			}
+			return new ModelAndView("/moderator/home", "message", "Welcome, " + mod.getFullName());
 		}
 		else
 		{
-			return new ModelAndView("login", "error", "Get the fuck out, hacker boi!");
+			return new ModelAndView("redirect: ../login", "error", "Get the fuck out, hacker boi!");
 		}
 	}
 	
@@ -43,17 +36,31 @@ public class ModeratorController
 	public ModelAndView login(
 			@RequestParam(value="username", required=false) Optional<String>  username, 
 			@RequestParam(value="password", required=false) Optional<String> password,
+			@RequestParam(value="logout", required=false) Optional<String> logout,
+			@RequestParam(value="error", required=false) Optional<String> error,
 			HttpServletRequest request)
 	{
-		if(username.isPresent() && password.isPresent())
+		if(error.isPresent())
 		{
+			return new ModelAndView("redirect: login", "error", error.get());
+		}
+		else if(logout.isPresent())
+		{
+			request.getSession().setAttribute("loggedInUser", null);
+			return new ModelAndView("login");
+		}
+		else if(username.isPresent() && password.isPresent())
+		{
+			// Attempt to log in the moderator with the given credentials
 			Moderator toAuth = ModeratorDAO.attemptLogin(username.get(), password.get());
+			
 			if(toAuth != null)
 			{
+				// Add the Moderator to the session
 				request.getSession().setAttribute("loggedInUser", toAuth);
-				
-				// TODO: Create authentication token
-				return new ModelAndView("redirect: moderator/home", "message", "Welcome, " + toAuth.getFullName());
+
+				// Redirect to the moderator homepage
+				return new ModelAndView("redirect: moderator/home");
 			}
 			else
 			{
