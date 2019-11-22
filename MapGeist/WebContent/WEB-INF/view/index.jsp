@@ -113,7 +113,7 @@
 		    	var formData = new FormData(form)
 		    	
 		    	var formattedData = "";
-		    	for (var [key, value] of formData.entries()) { 
+		    	for (var [key, value] in formData.entries()) { 
 			    	formattedData += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
 				}
 		    	
