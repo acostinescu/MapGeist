@@ -27,9 +27,11 @@
 				<a class="btn" href="<c:url value="/login?logout" />">Log out</a>
 			</section>
 		</div>
+		
+		<c:url var="activeEvents" value="/Event/active" ></c:url>
 	
 		<script type="text/javascript">
-	  		var mymap = L.map('leafletMap').setView([40.006463, -105.265991], 15);
+	  		var map = L.map('leafletMap').setView([40.006463, -105.265991], 15);
 	  		
 		 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibHVzdzYxMjYiLCJhIjoiY2oxbDdxc3BxMDAwcTMybDI2M28wM3VnaiJ9.2Oop3pz_TvNkmyOBvWWA7A', {
 		        maxZoom: 18,
@@ -37,7 +39,7 @@
 		            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 		            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 		        id: 'mapbox.streets'
-		    }).addTo(mymap);
+		    }).addTo(map);
 		 	
 		    var customOptions = {
 		        'className' : 'custom'
@@ -50,7 +52,28 @@
 		       
 	       	}
 		    
-		    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(mymap);
+		    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(map);
+		    
+		    
+		    
+		    
+		 // Request the active events from the server
+		    var xhttp = new XMLHttpRequest();
+		    xhttp.onreadystatechange = function(){
+		    	if (this.readyState == 4 && this.status == 200) {
+		    		var eventArr = JSON.parse(this.responseText);
+		    		addEventMarkers(eventArr);
+	    	    }
+		    }
+		    xhttp.open("GET", "${activeEvents}", true);
+		    xhttp.send();
+		    
+		    // Add the requested events to the map
+		    function addEventMarkers(eventArr){
+		    	for(var i = 0; i < eventArr.length; i++){
+		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
+		    	}
+		    }
 		  </script>
 	</body>
 </html>
