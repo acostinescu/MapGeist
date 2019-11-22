@@ -109,7 +109,7 @@
 		    
 		    // Submit the new event form
 		    function submitNewEvent(e){
-		    	var form = document.querySelector("#newEvent"); 
+		    	var form = document.querySelector("#newEvent");
 		    	var formData = new FormData(form)
 		    	
 		    	var formattedData = "";

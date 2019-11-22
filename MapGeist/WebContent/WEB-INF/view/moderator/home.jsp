@@ -22,9 +22,10 @@
 				<div id="leafletMap"></div>
 				<img class="mapgeist--logo" src="<c:url value="/resources/images/logo.svg" />" />
 			</section> 
-			<section class="sidebar">
+			<section class="sidebar" id="eventBar">
 				${message}
 				<a class="btn" href="<c:url value="/login?logout" />">Log out</a>
+				
 			</section>
 		</div>
 		
@@ -46,11 +47,8 @@
 		    }
 		    
 		    var domelem = document.createElement('a');
-		    domelem.href = "#point_555_444";
+		    
 		    domelem.innerHTML = "Click me";
-		    domelem.onclick =  function myfunction(){
-		       
-	       	}
 		    
 		    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(map);
 		    
@@ -70,10 +68,16 @@
 		    
 		    // Add the requested events to the map
 		    function addEventMarkers(eventArr){
+		    	var eventList = "<ul class='eventlist'>"
 		    	for(var i = 0; i < eventArr.length; i++){
 		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
+		    		eventList += "<li class='eventitem'>"+eventArr[i].title+"</li>";
+		    		console.log(eventList);		    		
 		    	}
+		    	eventList += "</ul>";
+		    	document.getElementById("eventBar").innerHTML += eventList;
 		    }
+		    
 		  </script>
 	</body>
 </html>
