@@ -4,15 +4,19 @@
 
 <html> 
 	<head>
-		<link rel="stylesheet" href="<c:url value="/resources/styles/styles.css"  />" />
+		
 		
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
 		   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
 		   crossorigin=""/>
 		   
-		 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+	 	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
 		   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
 		   crossorigin=""></script>
+		   
+		   
+	   	<link rel="stylesheet" href="<c:url value="/resources/styles/styles.css"  />" />
+	   	<script src="<c:url value="/resources/scripts/mapgeist.js"  />" type="text/javascript"></script>
 	</head> 
 	<body>
 		
@@ -22,16 +26,27 @@
 				<div id="leafletMap"></div>
 				<img class="mapgeist--logo" src="<c:url value="/resources/images/logo.svg" />" />
 			</section> 
-			<section class="sidebar" id="eventBar">
-				${message}
-				<a class="btn" href="<c:url value="/login?logout" />">Log out</a>
+			<section class="sidebar">
 				
+				<div class="sidebar--static">
+					${message}
+					<div class="test" data-eventid="00e0c698-a5b4-43a7-8efe-d67396a5476c">Test Hover!</div>
+					<a class="btn" href="<c:url value="/login?logout" />">Log out</a> 
+				</div>
+				
+				<div class="sidebar--scroll">
+					<div id="eventBar"></div>
+				</div>
 			</section>
 		</div>
 		
 		<c:url var="activeEvents" value="/Event/active" ></c:url>
 	
+		
+	
 		<script type="text/javascript">
+		
+
 	  		var map = L.map('leafletMap').setView([40.006463, -105.265991], 15);
 	  		
 		 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibHVzdzYxMjYiLCJhIjoiY2oxbDdxc3BxMDAwcTMybDI2M28wM3VnaiJ9.2Oop3pz_TvNkmyOBvWWA7A', {
@@ -41,21 +56,8 @@
 		            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 		        id: 'mapbox.streets'
 		    }).addTo(map);
-		 	
-		    var customOptions = {
-		        'className' : 'custom'
-		    }
-		    
-		    var domelem = document.createElement('a');
-		    
-		    domelem.innerHTML = "Click me";
-		    
-		    var marker = L.marker([40.006463, -105.265991]).bindPopup(domelem).addTo(map);
-		    
-		    
-		    
-		    
-		 // Request the active events from the server
+
+		 	// Request the active events from the server
 		    var xhttp = new XMLHttpRequest();
 		    xhttp.onreadystatechange = function(){
 		    	if (this.readyState == 4 && this.status == 200) {
@@ -68,15 +70,33 @@
 		    
 		    // Add the requested events to the map
 		    function addEventMarkers(eventArr){
-		    	var eventList = "<ul class='eventlist'>"
+		    	
+		    	var eventList = document.createElement("ul");
+		    	eventList.className = "event-list";
+		    	
 		    	for(var i = 0; i < eventArr.length; i++){
 		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
-		    		eventList += "<li class='eventitem'>"+eventArr[i].title+"</li>";
-		    		console.log(eventList);		    		
+		    		
+		    		marker.setEventId(eventArr[i].id);
+		    		
+		    		var listItem = document.createElement("li");
+		    		listItem.className = "event-item";
+		    		
+		    		listItem.dataset.eventid = eventArr[i].id;
+		    		
+		    		setEventListHover(listItem, "div");
+		    		
+		    		var eventTitle = document.createElement("h3");
+		    		eventTitle.innerText = eventArr[i].title;
+		    		listItem.append(eventTitle);
+		    		
+		    		eventList.append(listItem);
 		    	}
-		    	eventList += "</ul>";
-		    	document.getElementById("eventBar").innerHTML += eventList;
+
+		    	document.getElementById("eventBar").append(eventList);
 		    }
+		    
+		    
 		    
 		  </script>
 	</body>
