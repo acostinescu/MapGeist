@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Maptilities
 {
@@ -33,5 +35,13 @@ public class Maptilities
 		catch(NoSuchAlgorithmException ex){}
 		
 		return encryptedPassword;
+	}
+	
+	
+	public static String formatDateString(Date toFormat)
+	{
+		String pattern = "yyyy-MM-dd'T'hh:mm:ss"; 
+		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+		return formatter.format(toFormat);
 	}
 }

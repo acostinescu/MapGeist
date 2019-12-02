@@ -28,8 +28,8 @@ public class ModeratorController
 		}
 		else
 		{
-			return new ModelAndView("redirect: ../login", "error", "Get the fuck out, hacker boi!");
-		}
+			return new ModelAndView("redirect: ../login");
+		} 
 	}
 	
 	@RequestMapping(value="/login")

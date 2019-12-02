@@ -79,24 +79,42 @@
 		    		
 		    		marker.setEventId(eventArr[i].id);
 		    		
+		    		// Create li container
 		    		var listItem = document.createElement("li");
 		    		listItem.className = "event-item";
 		    		
+		    		// Event ID
 		    		listItem.dataset.eventid = eventArr[i].id;
 		    		
-		    		setEventListHover(listItem, "div");
+		    		// Set hover
+		    		setEventListHover(listItem);
 		    		
+		    		// Event title
 		    		var eventTitle = document.createElement("h3");
 		    		eventTitle.innerText = eventArr[i].title;
 		    		listItem.append(eventTitle);
 		    		
+		    		// Event description
+		    		var eventDescription = document.createElement("p");
+		    		eventDescription.innerText = eventArr[i].description;
+		    		listItem.append(eventDescription);
+		    		
+		    		// Event location
+		    		var eventLocation = document.createElement("p");
+		    		eventLocation.innerText = eventArr[i].location; 
+		    		listItem.append(eventLocation);
+		    		
+		    		// Event time
+		    		var eventTime = document.createElement("p");
+		    		eventTime.innerText = formatDateTime(eventArr[i].starttime, eventArr[i].endtime);
+		    		listItem.append(eventTime);
+		    		
+		    		// Add the li container to the list
 		    		eventList.append(listItem);
 		    	}
-
+		    	
 		    	document.getElementById("eventBar").append(eventList);
 		    }
-		    
-		    
 		    
 		  </script>
 	</body>

@@ -45,27 +45,20 @@ public class EventController {
 									  @RequestParam(value="EndTime", required=false) Optional<String> EndTime,
 									  @RequestParam(value="Longitude", required=false) Optional<String> Longitude,
 									  @RequestParam(value="Latitude", required=false) Optional<String> Latitude,
-									  @RequestParam(value="Email", required=false) Optional<String> Email) {
-	
-		
-		System.out.println(StartTime.get());
+									  @RequestParam(value="Email", required=false) Optional<String> Email) 
+	{
 		LocalDateTime startTime = LocalDateTime.parse(StartTime.get());
 		Timestamp StartTimeStamp = Timestamp.valueOf(startTime);
-		System.out.println(StartTimeStamp);
-		
-		System.out.println(EndTime.get());
+
 		LocalDateTime endTime = LocalDateTime.parse(EndTime.get());		
 		Timestamp EndTimeStamp = Timestamp.valueOf(endTime);
-		System.out.println(EndTimeStamp);
-		
+
 		Date todaysDate = new Date();
 		double latitude = Double.parseDouble(Latitude.get());
 		double longitude = Double.parseDouble(Longitude.get());
-		System.out.println(latitude);
-		System.out.println(longitude);
 		
 		Event NewEvent = new Event(Title.get(), Description.get(), StartTimeStamp, EndTimeStamp, Location.get(), longitude, latitude, Email.get(), todaysDate);
-	 EventDAO.insertEvent(NewEvent);
+		EventDAO.insertEvent(NewEvent);
 		return;
 	}
 	

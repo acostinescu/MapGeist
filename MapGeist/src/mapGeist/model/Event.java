@@ -10,6 +10,8 @@ import java.util.UUID;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import mapGeist.Maptilities;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;  
 import java.text.SimpleDateFormat;  
@@ -199,7 +201,6 @@ public class Event
 			
 			DateFormat df = new SimpleDateFormat(pattern);
 			
-			
 			eventMap.put("id", e.getID().toString());
 			eventMap.put("title", e.getTitle());
 			eventMap.put("description", e.getDescription());
@@ -207,14 +208,27 @@ public class Event
 			eventMap.put("latitude", Double.toString(e.getLatitude()));
 			eventMap.put("longitude", Double.toString(e.getLongitude()));
 			eventMap.put("email", e.getEmailAddress());
-			if(e.getDateReviewed() == null) 
+			eventMap.put("starttime", Maptilities.formatDateString(e.getStartTime()));
+			
+			
+			if(e.getEndTime() != null)
 			{
-				eventMap.put("date_reviewed", "null");
+				eventMap.put("endtime", Maptilities.formatDateString(e.getEndTime()));
 			}
 			else
 			{
+				eventMap.put("endtime", "null");
+			}
+			
+			if(e.getDateReviewed() != null) 
+			{
 				eventMap.put("date_reviewed", df.format(e.getDateReviewed()));
-			}			
+			}
+			else
+			{
+				eventMap.put("date_reviewed", "null");
+			}
+			
 			eventMap.put("date_submitted", df.format(e.getDateSubmitted()));
 			
 			response.put(eventMap);
