@@ -280,6 +280,10 @@ body
 /* END MODERATOR */
 
 /* LEAFLET */
+.leaflet-container
+{
+	font:inherit;
+}
 .leaflet-popup-content-wrapper
 {
 	border-radius:0.125rem;
@@ -287,13 +291,50 @@ body
 .leaflet-popup-content
 {
 	margin:0;
-	padding:1rem;
+	font-size:0.875rem;
+	padding:1.5rem;
+	min-width:25vw;
+	
 }
 .leaflet-marker-icon
 {
 	transition:transform .2s ease, filter .2s ease;
 }
 /* END LEAFLET */
+
+/* ADD EVENT POPUP */
+.popup--title
+{
+	font-family: "Amatic SC", cursive;
+    font-weight: 200;
+    text-align:center;
+    text-transform:uppercase;
+    margin:0 0 1rem;
+    font-size:3em;
+}
+.form--group
+{
+	display:flex;
+	flex-direction:column;
+	margin:0 0 1.25em;
+}
+.control--label
+{ 
+	display:block;
+	margin:0 0 0.25em;
+}
+.form--control
+{
+	display:flex;
+	align-items:center;
+	height:2em;
+	padding:0 0.5em;
+	-webkit-appearance:none;
+	border:0.0625rem solid #ddd;
+	border-radius:0.125rem;
+	font:inherit;
+}
+/* END ADD EVENT POPUP */
 
 /* EVENT LIST MODERATOR HOME*/
 .event-list 

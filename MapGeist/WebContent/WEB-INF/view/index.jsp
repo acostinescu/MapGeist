@@ -21,13 +21,30 @@
 	<body>
 
 		<div id="input-container">
+			<h3 class="popup--title">Add Event</h3>
 			<form id='newEvent' action="<c:url var="newEvent" value="/NewEventSubmit" />" method="POST">
-				Event Title: <input type="text" id="Title" name="Title"><br><br>
-				Event Description: <input type="text" name="Description"><br><br>
-				Event Location: <input type="text" name="Location"><br><br>
-				Event Start Time: <input type="datetime-local" name="StartTime"><br><br>
-				Event End Time: <input type="datetime-local" name="EndTime"><br><br>
-				Email Address: <input type="text" name="Email"><br><br>
+				<div class="form--group">
+					<input class="form--control" type="text" id="Title" placeholder="Title" name="Title">
+				</div> 
+				<div class="form--group">
+					<input class="form--control" type="text" id="Description" placeholder="Description" name="Description">
+				</div>
+				<div class="form--group">
+					<input class="form--control" type="text" id="Location" placeholder="Location" name="Location">
+				</div>
+				<div class="form--group">
+					<input class="form--control" type="text" id="Email" placeholder="Email Address" name="Email">
+				</div> 
+				<div class="form--group">
+					<label class="control--label" for="StartTime">Start Time:</label>
+					<input class="form--control" type="datetime-local" id="StartTime" name="StartTime">
+				</div>
+				<div class="form--group">
+					<label class="control--label" for="EndTime">End Time:</label>
+					<input class="form--control" type="datetime-local" id="EndTime" name="EndTime">
+				</div>
+				
+				
 				<input type="hidden" id="Longitude" name="Longitude">
 				<input type="hidden" id="Latitude" name="Latitude">	
 				

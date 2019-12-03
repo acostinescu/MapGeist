@@ -6,7 +6,6 @@ L.Marker.include({
 	}
 });
 
-
 function setEventListHover(listItem) {
 	listItem.onmouseenter = function() {
 		
@@ -86,8 +85,8 @@ function formatDateTime(startTime, endTime) {
 	return formatted;
 }
 
-const types = ["default", "success"];
 
+const alertTypes = ["default", "success"];
 function createAlert(content, type="default") {
 	
 	if(!content){
@@ -95,7 +94,7 @@ function createAlert(content, type="default") {
 		return;
 	}
 	
-	if(!types.includes(type)){
+	if(!alertTypes.includes(type)){
 		console.err("Error: Invalid alert type");
 		return;
 	}
