@@ -88,6 +88,8 @@ function formatDateTime(startTime, endTime) {
 
 const types = ["default", "success"];
 
+var alertTimeout;
+
 function createAlert(content, type="default") {
 	
 	if(!content){
@@ -103,8 +105,33 @@ function createAlert(content, type="default") {
 	var alertBox = document.createElement("div");
 	alertBox.className = "alert alert__" + type;
 	alertBox.innerText = content;
+	
+	var closeButton = document.createElement("a");
+	closeButton.className = "alert--close";
+	closeButton.innerText = '\u00D7';
+	closeButton.addEventListener("click", function(){
+		removeAlert(alertBox);
+	})
+	alertBox.append(closeButton);
 
 	document.body.append(alertBox);
+	
+	alertTimeout = setTimeout(function(){
+		removeAlert(alertBox);
+	}, 10000);
+}
+
+function removeAlert(alertBox) {
+	alertBox.className += " alert__remove";
+	var newAlert = alertBox.cloneNode(true);
+	
+	alertBox.parentNode.replaceChild(newAlert, alertBox);
+	
+	setTimeout(function(){
+		newAlert.remove();
+	}, 200);
+	
+	if(alertTimeout) clearTimeout(alertTimeout)
 }
 
 
