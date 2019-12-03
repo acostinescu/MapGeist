@@ -4,8 +4,6 @@
 
 <html> 
 	<head>
-		
-		
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
 		   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
 		   crossorigin=""/>
@@ -41,12 +39,8 @@
 		</div>
 		
 		<c:url var="activeEvents" value="/Event/active" ></c:url>
-	
-		
-	
-		<script type="text/javascript">
-		
 
+		<script type="text/javascript">
 	  		var map = L.map('leafletMap').setView([40.006463, -105.265991], 15);
 	  		
 		 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibHVzdzYxMjYiLCJhIjoiY2oxbDdxc3BxMDAwcTMybDI2M28wM3VnaiJ9.2Oop3pz_TvNkmyOBvWWA7A', {

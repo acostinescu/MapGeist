@@ -330,3 +330,25 @@ body
 	margin:0;
 }
 /* END EVENT LIST MODERATOR HOME*/
+
+/* ALERTS */
+.alert
+{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+	position:fixed;
+	bottom:1rem;
+	left:1rem;
+	right:1rem;
+	border-radius:0.125rem;
+	height:3rem;
+	padding:0 1.5rem;
+}
+.alert__success
+{
+	background:green;
+	color:#fff;
+}
+
+/* END ALERTS */

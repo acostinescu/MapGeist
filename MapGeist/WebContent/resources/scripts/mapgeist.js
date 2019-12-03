@@ -1,8 +1,6 @@
 L.Marker.include({
 	setEventId: function(eventid){
-		
 		if(eventid){
-			
 			this._icon.dataset.eventid = eventid;
 		} 
 	}
@@ -87,3 +85,29 @@ function formatDateTime(startTime, endTime) {
 
 	return formatted;
 }
+
+const types = ["default", "success"];
+
+function createAlert(content, type="default") {
+	
+	if(!content){
+		console.err("Error: An alert must have content.");
+		return;
+	}
+	
+	if(!types.includes(type)){
+		console.err("Error: Invalid alert type");
+		return;
+	}
+	
+	var alertBox = document.createElement("div");
+	alertBox.className = "alert alert__" + type;
+	alertBox.innerText = content;
+
+	document.body.append(alertBox);
+}
+
+
+
+
+

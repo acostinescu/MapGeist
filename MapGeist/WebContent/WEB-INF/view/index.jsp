@@ -15,7 +15,8 @@
 		   crossorigin=""></script>
 		   
 		   
-   		 <link rel="stylesheet" href="<c:url value="/resources/styles/styles.css"  />" />
+		<link rel="stylesheet" href="<c:url value="/resources/styles/styles.css"  />" />
+		<script src="<c:url value="/resources/scripts/mapgeist.js"  />" type="text/javascript"></script>
 	</head>
 	<body>
 
@@ -104,16 +105,14 @@
 		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
 		    	}
 		    }
-		    
-		    
-		    
+
 		    // Submit the new event form
 		    function submitNewEvent(e){
 		    	var form = document.querySelector("#newEvent");
 		    	var formData = new FormData(form)
 		    	
 		    	var formattedData = "";
-		    	for (var [key, value] in formData.entries()) { 
+		    	for (var [key, value] of formData.entries()) { 
 			    	formattedData += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
 				}
 		    	
@@ -122,7 +121,7 @@
 		    	var request = new XMLHttpRequest();
 		    	request.onreadystatechange = function(){
 			    	if (this.readyState == 4 && this.status == 200) {
-			    		document.getElementById('postResponseForm').innerText="Event " + eventName + " submitted.";				    
+			    		createAlert("Event " + eventName + " submitted.", "success");			    
 			    	}
 			    }
 		    	
