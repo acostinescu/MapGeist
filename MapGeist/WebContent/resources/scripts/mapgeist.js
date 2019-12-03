@@ -88,8 +88,6 @@ function formatDateTime(startTime, endTime) {
 
 const types = ["default", "success"];
 
-var alertTimeout;
-
 function createAlert(content, type="default") {
 	
 	if(!content){
@@ -116,7 +114,7 @@ function createAlert(content, type="default") {
 
 	document.body.append(alertBox);
 	
-	alertTimeout = setTimeout(function(){
+	alertBox.timeout = setTimeout(function(){
 		removeAlert(alertBox);
 	}, 10000);
 }
@@ -131,7 +129,7 @@ function removeAlert(alertBox) {
 		newAlert.remove();
 	}, 200);
 	
-	if(alertTimeout) clearTimeout(alertTimeout)
+	if(alertBox.timeout) clearTimeout(alertBox.timeout)
 }
 
 

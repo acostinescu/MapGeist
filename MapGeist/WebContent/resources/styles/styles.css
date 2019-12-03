@@ -351,11 +351,20 @@ body
     -webkit-box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.25);
     -moz-box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.25);
     box-shadow: 0px 0px 1rem 0px rgba(0,0,0,0.25);	
+    
+    font-weight:200;
+}
+.alert__default
+{
+	background:#f3f3f3;
+	color:#333;
+	border:0.0625rem solid #333;
 }
 .alert__success
 {
-	background:green;
-	color:#fff;
+	background: #228b22;
+    border: 0.0625rem solid #355e3b;
+	color:#f3f3f3;
 }
 .alert__remove
 {

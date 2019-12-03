@@ -164,7 +164,7 @@
 		    	var request = new XMLHttpRequest();
 		    	request.onreadystatechange = function(){
 			    	if (this.readyState == 4 && this.status == 200) {
-			    		createAlert("Event " + eventName + " submitted.", "success");			    
+			    		createAlert("Your event was successfully submitted for approval! Our moderators will get to it... eventually.", "success");			    
 			    	}
 			    }
 		    	
