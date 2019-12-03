@@ -43,7 +43,10 @@
 				<img class="mapgeist--logo" src="<c:url value="/resources/images/logo.svg" />" />
 			</section>
 			<section class="sidebar">
-				List of events goes here!
+				
+				<div class="sidebar--scroll">
+					<div id="eventBar"></div>
+				</div>
 			</section>
 		</div>
 
@@ -101,9 +104,49 @@
 		    
 		    // Add the requested events to the map
 		    function addEventMarkers(eventArr){
+		    	var eventList = document.createElement("ul");
+		    	eventList.className = "event-list";
+		    	
 		    	for(var i = 0; i < eventArr.length; i++){
 		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
+		    		
+		    		marker.setEventId(eventArr[i].id);
+		    		
+		    		// Create li container
+		    		var listItem = document.createElement("li");
+		    		listItem.className = "event-item";
+		    		
+		    		// Event ID
+		    		listItem.dataset.eventid = eventArr[i].id;
+		    		
+		    		// Set hover
+		    		setEventListHover(listItem);
+		    		
+		    		// Event title
+		    		var eventTitle = document.createElement("h3");
+		    		eventTitle.innerText = eventArr[i].title;
+		    		listItem.append(eventTitle);
+		    		
+		    		// Event description
+		    		var eventDescription = document.createElement("p");
+		    		eventDescription.innerText = eventArr[i].description;
+		    		listItem.append(eventDescription);
+		    		
+		    		// Event location
+		    		var eventLocation = document.createElement("p");
+		    		eventLocation.innerText = eventArr[i].location; 
+		    		listItem.append(eventLocation);
+		    		
+		    		// Event time
+		    		var eventTime = document.createElement("p");
+		    		eventTime.innerText = formatDateTime(eventArr[i].starttime, eventArr[i].endtime);
+		    		listItem.append(eventTime);
+		    		
+		    		// Add the li container to the list
+		    		eventList.append(listItem);
 		    	}
+		    	
+		    	document.getElementById("eventBar").append(eventList);
 		    }
 
 		    // Submit the new event form
