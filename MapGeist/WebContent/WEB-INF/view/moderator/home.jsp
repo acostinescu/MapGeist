@@ -38,7 +38,7 @@
 			</section>
 		</div>
 		
-		<c:url var="activeEvents" value="/Event/active"></c:url>
+		<c:url var="allEvents" value="/Event/all"></c:url>
 		<c:url var="reviewEvent" value="/Event/review"></c:url>
 
 		<script type="text/javascript">
@@ -48,7 +48,7 @@
 		        maxZoom: 18,
 		        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
 		            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-		            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		            'Imagery ï¿½ <a href="http://mapbox.com">Mapbox</a>',
 		        id: 'mapbox.streets'
 		    }).addTo(map);
 
@@ -60,7 +60,7 @@
 		    		addEventMarkers(eventArr);
 	    	    }
 		    }
-		    xhttp.open("GET", "${activeEvents}", true);
+		    xhttp.open("GET", "${allEvents}", true);
 		    xhttp.send();
 		    
 		    // Add the requested events to the map

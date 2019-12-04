@@ -188,14 +188,13 @@ public class Event
         this.approved = false;
         this.dateReviewed = new Date();
     }
-    public static JSONArray getEventsJson()
-	{
-		List<Event> eventList = EventDAO.getAllEvents();
-		String pattern = "MM/dd/yyyy HH:mm:ss";
-		
-		JSONArray response = new JSONArray();
-		
-		for(Event e : eventList)
+    
+    public static JSONArray eventListToJson(List<Event> eventList)
+    {
+    	JSONArray response = new JSONArray();
+    	String pattern = "MM/dd/yyyy HH:mm:ss";
+    	
+    	for(Event e : eventList)
 		{
 			JSONObject eventMap = new JSONObject();
 			
@@ -209,6 +208,8 @@ public class Event
 			eventMap.put("longitude", Double.toString(e.getLongitude()));
 			eventMap.put("email", e.getEmailAddress());
 			eventMap.put("starttime", Maptilities.formatDateString(e.getStartTime()));
+			eventMap.put("approved", e.isApproved());
+			eventMap.put("queued", e.isQueued());
 			
 			
 			if(e.getEndTime() != null)
@@ -233,6 +234,18 @@ public class Event
 			
 			response.put(eventMap);
 		}
-		return response;
+    	return response;
+    }
+    
+    public static JSONArray getEventsJson()
+	{
+		List<Event> eventList = EventDAO.getAllEvents();		
+		return eventListToJson(eventList);
+	}
+    
+    public static JSONArray getActiveMapEventsJson()
+	{
+		List<Event> eventList = EventDAO.getAllActiveEvents();
+		return eventListToJson(eventList);
 	}
 }

@@ -116,13 +116,13 @@
 		    xhttp.open("GET", "${activeEvents}", true);
 		    xhttp.send();
 		    
+		    
 		    // Add the requested events to the map
 		    function addEventMarkers(eventArr){
 		    	var eventList = document.createElement("ul");
-		    	eventList.className = "event-list";
-		    	
+		    	eventList.className = "event-list";		    	
 		    	for(var i = 0; i < eventArr.length; i++){
-		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
+	    			var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
 		    		
 		    		marker.setEventId(eventArr[i].id);
 		    		
@@ -157,7 +157,8 @@
 		    		listItem.append(eventTime);
 		    		
 		    		// Add the li container to the list
-		    		eventList.append(listItem);
+		    		eventList.append(listItem);		
+		    		
 		    	}
 		    	
 		    	document.getElementById("eventBar").append(eventList);
