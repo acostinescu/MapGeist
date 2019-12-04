@@ -104,6 +104,31 @@
 		    		eventTime.innerText = formatDateTime(eventArr[i].starttime, eventArr[i].endtime);
 		    		listItem.append(eventTime);
 		    		
+		    		// Buttons
+		    		var buttonBox = document.createElement("div");
+		    		buttonBox.className = "event--buttons";
+		    		
+		    		var approveButton = document.createElement("button");
+		    		approveButton.className = "event--button button__approve";
+		    		approveButton.textContent = "Approve";
+					approveButton.addEventListener("click", function(){
+						var id = this.closest(".event-item").dataset.eventid;
+		    			reviewEvent(id, true);
+		    		});
+		    		buttonBox.append(approveButton);
+		    		
+		    		
+		    		var denyButton = document.createElement("button");
+		    		denyButton.className = "event--button button__deny";
+		    		denyButton.textContent = "Deny";
+		    		denyButton.addEventListener("click", function(){
+		    			var id = this.closest(".event-item").dataset.eventid;
+		    			reviewEvent(id, false);
+		    		});
+		    		buttonBox.append(denyButton);
+		    		
+		    		listItem.append(buttonBox);
+		    		
 		    		// Add the li container to the list
 		    		eventList.append(listItem);
 		    	}
