@@ -90,20 +90,21 @@ public class EventController {
 		Moderator mod = (Moderator)request.getSession().getAttribute("loggedInUser");
 		if(mod != null)
 		{
-			UUID eId = UUID.fromString(id);
-			Event toReview = EventDAO.getEvent(eId);
+			Event toReview = EventDAO.getEvent(id);
 			
 			// Make sure that the event exists
 			if(toReview != null)
 			{
 				if(approved)
 				{
-					toReview.approve();
+					toReview.approve(mod);
 				}
 				else
 				{
-					toReview.deny();
+					toReview.deny(mod);
 				}
+
+				System.out.println("Test!");
 				
 				EventDAO.updateEvent(toReview);
 			}

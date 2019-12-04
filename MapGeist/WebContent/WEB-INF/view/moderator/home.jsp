@@ -114,14 +114,24 @@
 		    
 		    function reviewEvent(id, approved){
 		    	
-			    var xhttp = new XMLHttpRequest();
-			    xhttp.onreadystatechange = function(){
+		    	var request = new XMLHttpRequest();
+		    	request.onreadystatechange = function(){
 			    	if (this.readyState == 4 && this.status == 200) {
-		    	    }
+			    		if(approved){
+			    			createAlert("Event approved.", "success");	
+			    		}
+			    		else{
+			    			createAlert("Event denied.", "success");	
+			    		}
+			    	}
 			    }
-			    
-			    xhttp.open("GET", "${reviewEvent}", true);
-			    xhttp.send();
+		    	
+		    	var formattedData = "id=" + encodeURIComponent(id) + "&";
+		    	formattedData += "approved=" + encodeURIComponent(approved);
+		    	
+		    	request.open("POST", "${reviewEvent}", true);
+		    	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    	request.send(formattedData);
 		    }
 		    
 		  </script>

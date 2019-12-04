@@ -19,7 +19,7 @@ import java.util.Calendar;
 
 public class Event
 {
-	private UUID id;
+	private String id;
     private String title;
     private String description;
     private Timestamp startTime;
@@ -32,12 +32,12 @@ public class Event
     private Boolean queued; 
     private Boolean approved;
     private Date dateReviewed;
-    private UUID reviewedBy;
+    private String reviewedBy;
     
     public Event(String title, String description, Timestamp startTime, Timestamp endTime, String location, double longitude, double latitude, String emailAddr, Date dateSubmitted)
     {
         
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.startTime = startTime;
@@ -53,7 +53,7 @@ public class Event
         this.reviewedBy = null;
     }
     
-    public Event(UUID id, String title, String description, Timestamp startTime, Timestamp endTime, String location, double longitude, double latitude, String emailAddr, Date dateSubmitted, boolean queued, Boolean approved, Date dateReviewed, UUID reviewedBy)
+    public Event(String id, String title, String description, Timestamp startTime, Timestamp endTime, String location, double longitude, double latitude, String emailAddr, Date dateSubmitted, boolean queued, Boolean approved, Date dateReviewed, String reviewedBy)
     {
         
         this.id = id;
@@ -72,15 +72,11 @@ public class Event
         this.reviewedBy = reviewedBy;
     }
     
-    public UUID getID()
+    public String getID()
     {
         return this.id;
     }
     public void setID(String id)
-    {
-    	this.id = UUID.fromString(id);
-    }
-    public void setID(UUID id)
     {
     	this.id = id;
     }
@@ -168,24 +164,26 @@ public class Event
     {
     	return this.dateReviewed;
     }
-    public UUID getReviewedBy()
+    public String getReviewedBy()
     {
     	return this.reviewedBy;
     }
     
-    public void addToModeratorQueue(UUID moderatorID)
+    public void addToModeratorQueue(String moderatorID)
     {
         this.queued = true;
         this.reviewedBy = moderatorID;
     }
-    public void approve()
+    public void approve(Moderator mod)
     {
         this.approved = true;
+        this.reviewedBy = mod.getID();
         this.dateReviewed = new Date();
     }
-    public void deny()
+    public void deny(Moderator mod)
     {
         this.approved = false;
+        this.reviewedBy = mod.getID();
         this.dateReviewed = new Date();
     }
     

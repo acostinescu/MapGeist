@@ -10,14 +10,14 @@ import java.util.HashMap;
 
 public class EventDAO
 {
-	public static Event getEvent(UUID id)
+	public static Event getEvent(String id)
 	{
 		Connection conn = Connector.getConnection();
 		
 		try
 		{
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Event WHERE id=" + id.toString());
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Event WHERE id='" + id + "'");
 			if(rs.next())
 			{
 				return extractEvent(rs);
@@ -149,8 +149,17 @@ public class EventDAO
             stmt.setBoolean(10, eve.isQueued());
             stmt.setBoolean(11, eve.isApproved());
             stmt.setDate(12, new java.sql.Date(eve.getDateReviewed().getTime()));
-            stmt.setString(13, eve.getReviewedBy().toString());
-            stmt.setString(14, eve.getID().toString());
+            
+            if(eve.getReviewedBy() != null)
+            {
+            	stmt.setString(13, eve.getReviewedBy().toString());
+            }
+            else
+            {
+            	stmt.setNull(13, Types.VARCHAR);
+            }
+            
+            stmt.setString(14, eve.getID());
             
             int success= stmt.executeUpdate();
             if(success == 1)
@@ -166,8 +175,7 @@ public class EventDAO
     
     private static Event extractEvent(ResultSet rs) throws SQLException
     {
-    	String idString = rs.getString("id");
-    	UUID id = UUID.fromString(idString);
+    	String id = rs.getString("id");
     	
     	String title = rs.getString("title");
     	String description = rs.getString("description");
@@ -185,9 +193,7 @@ public class EventDAO
     	
     	java.util.Date dateReviewed = rs.getDate("dateReviewed");
     	
-    	String reviewedByString = rs.getString("reviewedBy");
-    	UUID reviewedBy = null;
-    	if(!rs.wasNull()) reviewedBy = UUID.fromString(reviewedByString);
+    	String reviewedBy = rs.getString("reviewedBy");
     	
     	Event eve = new Event(id, title, description, startTime, endTime, location, longitude, latitude, emailAddress, dateSubmitted, queued, approved, dateReviewed, reviewedBy);
     	
