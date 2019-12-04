@@ -6,7 +6,6 @@ L.Marker.include({
 	}
 });
 
-
 function setEventListHover(listItem) {
 	listItem.onmouseenter = function() {
 		
@@ -86,8 +85,8 @@ function formatDateTime(startTime, endTime) {
 	return formatted;
 }
 
-const types = ["default", "success"];
 
+const alertTypes = ["default", "success"];
 function createAlert(content, type="default") {
 	
 	if(!content){
@@ -95,7 +94,7 @@ function createAlert(content, type="default") {
 		return;
 	}
 	
-	if(!types.includes(type)){
+	if(!alertTypes.includes(type)){
 		console.err("Error: Invalid alert type");
 		return;
 	}
@@ -103,8 +102,33 @@ function createAlert(content, type="default") {
 	var alertBox = document.createElement("div");
 	alertBox.className = "alert alert__" + type;
 	alertBox.innerText = content;
+	
+	var closeButton = document.createElement("a");
+	closeButton.className = "alert--close";
+	closeButton.innerText = '\u00D7';
+	closeButton.addEventListener("click", function(){
+		removeAlert(alertBox);
+	})
+	alertBox.append(closeButton);
 
 	document.body.append(alertBox);
+	
+	alertBox.timeout = setTimeout(function(){
+		removeAlert(alertBox);
+	}, 10000);
+}
+
+function removeAlert(alertBox) {
+	alertBox.className += " alert__remove";
+	var newAlert = alertBox.cloneNode(true);
+	
+	alertBox.parentNode.replaceChild(newAlert, alertBox);
+	
+	setTimeout(function(){
+		newAlert.remove();
+	}, 200);
+	
+	if(alertBox.timeout) clearTimeout(alertBox.timeout)
 }
 
 
