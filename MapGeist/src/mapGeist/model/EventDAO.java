@@ -59,7 +59,7 @@ public class EventDAO
 		try
 		{
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Event WHERE startTime < NOW() AND endTime > NOW()");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Event WHERE approved = 1 AND startTime < NOW() AND endTime > NOW()");
 			
 			List<Event> eventList = new ArrayList<Event>();
 			

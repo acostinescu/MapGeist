@@ -38,7 +38,7 @@
 			</section>
 		</div>
 		
-		<c:url var="activeEvents" value="/Event/active" ></c:url>
+		<c:url var="allEvents" value="/Event/all" ></c:url>
 
 		<script type="text/javascript">
 	  		var map = L.map('leafletMap').setView([40.006463, -105.265991], 15);
@@ -59,7 +59,7 @@
 		    		addEventMarkers(eventArr);
 	    	    }
 		    }
-		    xhttp.open("GET", "${activeEvents}", true);
+		    xhttp.open("GET", "${allEvents}", true);
 		    xhttp.send();
 		    
 		    // Add the requested events to the map

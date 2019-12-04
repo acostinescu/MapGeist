@@ -66,6 +66,15 @@ public class EventController {
 	@ResponseBody
 	public ResponseEntity<String> getAllActiveEvents()
 	{
+		JSONArray response = Event.getActiveMapEventsJson();
+		
+		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/Event/all", method= {RequestMethod.GET}, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<String> getAllEvents()
+	{
 		JSONArray response = Event.getEventsJson();
 		
 		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
