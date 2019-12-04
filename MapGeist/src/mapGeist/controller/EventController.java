@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import mapGeist.model.*;
+import java.util.UUID;
 
-import mapGeist.model.Event;
-import mapGeist.model.EventDAO;
+import javax.servlet.http.HttpServletRequest;
+
+import mapGeist.model.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -71,4 +72,33 @@ public class EventController {
 		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/Event/review")
+	public String reviewEvent(
+			@RequestParam(value="id") String id, 
+			@RequestParam(value="approved") boolean approved, 
+			HttpServletRequest request)
+	{
+		Moderator mod = (Moderator)request.getSession().getAttribute("loggedInUser");
+		if(mod != null)
+		{
+			UUID eId = UUID.fromString(id);
+			Event toReview = EventDAO.getEvent(eId);
+			
+			// Make sure that the event exists
+			if(toReview != null)
+			{
+				if(approved)
+				{
+					toReview.approve();
+				}
+				else
+				{
+					toReview.deny();
+				}
+				
+				EventDAO.updateEvent(toReview);
+			}
+		}
+		return "";
+	}
 }

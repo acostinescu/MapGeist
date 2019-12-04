@@ -38,7 +38,8 @@
 			</section>
 		</div>
 		
-		<c:url var="activeEvents" value="/Event/active" ></c:url>
+		<c:url var="activeEvents" value="/Event/active"></c:url>
+		<c:url var="reviewEvent" value="/Event/review"></c:url>
 
 		<script type="text/javascript">
 	  		var map = L.map('leafletMap').setView([40.006463, -105.265991], 15);
@@ -108,6 +109,19 @@
 		    	}
 		    	
 		    	document.getElementById("eventBar").append(eventList);
+		    }
+		    
+		    
+		    function reviewEvent(id, approved){
+		    	
+			    var xhttp = new XMLHttpRequest();
+			    xhttp.onreadystatechange = function(){
+			    	if (this.readyState == 4 && this.status == 200) {
+		    	    }
+			    }
+			    
+			    xhttp.open("GET", "${reviewEvent}", true);
+			    xhttp.send();
 		    }
 		    
 		  </script>

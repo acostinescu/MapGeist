@@ -44,9 +44,8 @@
 					<input class="form--control" type="datetime-local" id="EndTime" name="EndTime">
 				</div>
 				
-				
 				<input type="hidden" id="Longitude" name="Longitude">
-				<input type="hidden" id="Latitude" name="Latitude">	
+				<input type="hidden" id="Latitude" name="Latitude">
 				
 				<a onclick="submitNewEvent()" class="btn">Create Event</a>
 				
@@ -105,9 +104,7 @@
 		    }
 		    
 		    map.on("dblclick", onMapClick);
-		    
-		    
-		    
+
 		    // Request the active events from the server
 		    var xhttp = new XMLHttpRequest();
 		    xhttp.onreadystatechange = function(){
