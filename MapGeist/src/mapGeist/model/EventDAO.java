@@ -53,6 +53,81 @@ public class EventDAO
 		return null;
 	}
 	
+	public static List<Event> getNewModeratorEventsForApproval(String modID, int eventsToGet){
+		Connection conn = Connector.getConnection();
+		
+		List<Event> newModeratorEvents = new ArrayList<Event>();
+		
+		PreparedStatement stmt;
+		PreparedStatement stmt2;
+		PreparedStatement stmt3;
+		
+		try {
+			stmt = conn.prepareStatement("UPDATE TOP ? FROM EVENT WHERE queued = 0 AND reviewedBy = null SET ReviewedBy=?");
+			stmt.setInt(1, eventsToGet);
+			stmt.setString(2, modID);
+			
+			int rowUpdated = stmt.executeUpdate();
+			System.out.println(rowUpdated);
+			
+			stmt2 = conn.prepareStatement("SELECT TOP ? FROM EVENT WHERE queued = 0 AND reviewedBy = ?");
+			stmt2.setInt(1, eventsToGet);
+			stmt2.setString(2, modID);
+			
+			ResultSet resultSet = stmt2.executeQuery();
+			
+			while (resultSet.next()) {
+	        	Event queriedEvent = extractEvent(resultSet);
+	        	newModeratorEvents.add(queriedEvent);
+	        }
+			
+			stmt3 = conn.prepareStatement("UPDATE TOP ? FROM EVENT WHERE queued = 0 AND reviewedBy = ? SET queued=1");
+			stmt3.setInt(1, eventsToGet);
+			stmt3.setString(2, modID);
+			
+			int rowUpdated2 = stmt3.executeUpdate();
+			System.out.println(rowUpdated2);
+			
+			if (newModeratorEvents.size() > 0) {
+				return newModeratorEvents;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	public static List<Event> getQueuedModeratorEvents(String modID){
+		Connection conn = Connector.getConnection();
+		
+		List<Event> queuedEvents = new ArrayList<Event>();
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM EVENT WHERE queued = 1 AND reviewedBy = ?");
+	        stmt.setString(1, modID);
+			
+	        ResultSet resultSet = stmt.executeQuery();
+	        
+	        while (resultSet.next()) {
+	        	Event queriedEvent = extractEvent(resultSet);
+	        	queuedEvents.add(queriedEvent);
+	        }
+	        
+	        if(queuedEvents.size() > 0) {
+	        	return queuedEvents;
+	        }
+		
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+        
+		return null;
+	}
+	
 	public static List<Event> getAllActiveEvents()
 	{
 		Connection conn = Connector.getConnection();
