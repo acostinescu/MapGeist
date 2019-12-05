@@ -62,6 +62,7 @@
 		    xhttp.open("GET", "${allEvents}", true);
 		    xhttp.send();
 		    
+		    var markers = {};
 		    // Add the requested events to the map
 		    function addEventMarkers(eventArr){
 		    	
@@ -69,9 +70,10 @@
 		    	eventList.className = "event-list";
 		    	
 		    	for(var i = 0; i < eventArr.length; i++){
-		    		var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
 		    		
-		    		marker.setEventId(eventArr[i].id);
+		    		markers[eventArr[i].id] = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
+		    		
+		    		markers[eventArr[i].id].setEventId(eventArr[i].id);
 		    		
 		    		// Create li container
 		    		var listItem = document.createElement("li");
@@ -112,7 +114,7 @@
 		    		approveButton.textContent = "Approve";
 					approveButton.addEventListener("click", function(){
 						var id = this.closest(".event-item").dataset.eventid;
-		    			reviewEvent(id, true);
+		    			reviewEvent(id, true, this.closest(".event-item"));
 		    		});
 		    		buttonBox.append(approveButton);
 		    		
@@ -122,7 +124,7 @@
 		    		denyButton.textContent = "Deny";
 		    		denyButton.addEventListener("click", function(){
 		    			var id = this.closest(".event-item").dataset.eventid;
-		    			reviewEvent(id, false);
+		    			reviewEvent(id, false, this.closest(".event-item"));
 		    		});
 		    		buttonBox.append(denyButton);
 		    		
@@ -136,7 +138,7 @@
 		    }
 		    
 		    
-		    function reviewEvent(id, approved){
+		    function reviewEvent(id, approved, eventBlock){
 		    	
 		    	var request = new XMLHttpRequest();
 		    	request.onreadystatechange = function(){
@@ -147,6 +149,10 @@
 			    		else{
 			    			createAlert("Event denied.", "success");	
 			    		}
+			    		console.log("Removing Marker 4");
+		    			var eventMarker = markers[id];
+		    			map.removeLayer(eventMarker);
+		    			eventBlock.parentNode.removeChild(eventBlock);
 			    	}
 			    }
 		    	
