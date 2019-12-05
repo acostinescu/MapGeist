@@ -68,8 +68,12 @@ public class EventController {
 	public ResponseEntity<String> getAllActiveEvents()
 	{
 		JSONArray response = Event.getActiveMapEventsJson();
-		
-		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+		if(response != null) {
+			return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<String>("{}", HttpStatus.OK); 
+		}
 	}
 	
 	@RequestMapping(value="/Event/all", method= {RequestMethod.GET}, produces = "application/json")
@@ -77,7 +81,6 @@ public class EventController {
 	public ResponseEntity<String> getAllEvents()
 	{
 		JSONArray response = Event.getEventsJson();
-		
 		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
 	}
 	
@@ -104,8 +107,6 @@ public class EventController {
 					toReview.deny(mod);
 				}
 
-				System.out.println("Test!");
-				
 				EventDAO.updateEvent(toReview);
 			}
 		}

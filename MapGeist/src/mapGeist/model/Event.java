@@ -244,6 +244,9 @@ public class Event
     public static JSONArray getActiveMapEventsJson()
 	{
 		List<Event> eventList = EventDAO.getAllActiveEvents();
-		return eventListToJson(eventList);
+		if(eventList != null) {
+			return eventListToJson(eventList);
+		}
+		return null;
 	}
 }

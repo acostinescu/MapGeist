@@ -27,8 +27,7 @@
 			<section class="sidebar">
 				
 				<div class="sidebar--static">
-					${message}
-					<div class="test" data-eventid="00e0c698-a5b4-43a7-8efe-d67396a5476c">Test Hover!</div>
+					${message} 
 					<a class="btn" href="<c:url value="/login?logout" />">Log out</a> 
 				</div>
 				
