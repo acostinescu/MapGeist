@@ -6,6 +6,8 @@
 	<head>
 		<title>MapGeist - Login</title>
 		<link rel="stylesheet" href="<c:url value="/resources/styles/styles.css"  />" />
+		<link rel="shortcut icon" href="<c:url value="/resources/images/favicon.ico"/>" />
+		
 	</head>
 	<body class="flex-body body__center body__login">
 		<div class="login--bg"></div>
