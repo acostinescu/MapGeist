@@ -10,9 +10,13 @@
 		   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
 		   crossorigin=""/>
 		   
-		 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
 		   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
 		   crossorigin=""></script>
+
+	   	<!-- tail.DateTime -->
+		<script src="<c:url value="/resources/scripts/tail.datetime-full.min.js"/>"></script> 
+	  	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/styles/tail.datetime-default-green.min.css" />" />
 		   
 		<link rel="shortcut icon" href="<c:url value="/resources/images/favicon.ico"/>" />
 		   
@@ -36,13 +40,11 @@
 				<div class="form--group">
 					<input class="form--control" type="text" id="Email" placeholder="Email Address" name="Email">
 				</div> 
-				<div class="form--group">
-					<label class="control--label" for="StartTime">Start Time:</label>
-					<input class="form--control" type="datetime-local" id="StartTime" name="StartTime">
+				<div class="form--group" id="StartGroup">
+					<input class="form--control" type="text" id="StartTime" placeholder="Start Time" name="StartTime">
 				</div>
-				<div class="form--group">
-					<label class="control--label" for="EndTime">End Time:</label>
-					<input class="form--control" type="datetime-local" id="EndTime" name="EndTime">
+				<div class="form--group" id="EndGroup">
+					<input class="form--control" type="text" id="EndTime" placeholder="End Time" name="EndTime">
 				</div>
 				
 				<input type="hidden" id="Longitude" name="Longitude">
@@ -70,6 +72,11 @@
 		<c:url var="activeEvents" value="/Event/active" ></c:url>
 		
 	  	<script type="text/javascript">
+	  	
+	  	
+		  	tail.DateTime("#StartTime", {});
+		    tail.DateTime("#EndTime", {});
+	  	
 	  	
 	  		// Create a Leaflet map centered on Boulder
 		  	var map = L.map('leafletMap', {
@@ -172,6 +179,9 @@
 		    	
 		    	var formattedData = "";
 		    	for (var [key, value] of formData.entries()) { 
+		    		
+		    		if(key == "StartTime" || key == "EndTime") value = value.replace(" ", "T");
+		    		
 			    	formattedData += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
 				}
 		    	
@@ -188,6 +198,7 @@
 		    	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		    	request.send(formattedData);
 		    }
+		    
 	  	</script>
 	</body>
 </html>

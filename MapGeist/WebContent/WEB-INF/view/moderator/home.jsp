@@ -39,7 +39,7 @@
 			</section>
 		</div>
 		
-		<c:url var="allEvents" value="/Event/all"></c:url>
+		<c:url var="allEvents" value="/Event/queued"></c:url>
 		<c:url var="reviewEvent" value="/Event/review"></c:url>
 
 		<script type="text/javascript">

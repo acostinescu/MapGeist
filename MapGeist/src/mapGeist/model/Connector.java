@@ -9,8 +9,8 @@ import com.mysql.cj.jdbc.Driver;
 //which is created via the getConnection method.
 public class Connector {
     public static String URL = "jdbc:mysql://localhost:8889/MapGeist";
-    public static String USER = "java";
-    public static String PASS = "Project4%";
+    public static String USER = "root";
+    public static String PASS = "root";
     
     public static Connection getConnection() {
     	try {

@@ -76,12 +76,21 @@ public class EventController {
 		}
 	}
 	
-	@RequestMapping(value="/Event/all", method= {RequestMethod.GET}, produces = "application/json")
+	@RequestMapping(value="/Event/queued", method= {RequestMethod.GET}, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<String> getAllEvents()
+	public ResponseEntity<String> getAllEvents(HttpServletRequest request)
 	{
-		JSONArray response = Event.getEventsJson();
-		return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+		Moderator mod = (Moderator)request.getSession().getAttribute("loggedInUser");
+		if(mod != null) {
+			List<Event> queuedEvents = EventQueue.loadModeratorQueue(mod);
+			if(queuedEvents != null) {
+				JSONArray response = Event.eventListToJson(queuedEvents);
+				return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
+			}
+			
+		}
+		
+		return new ResponseEntity<String>("{}", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/Event/review")
