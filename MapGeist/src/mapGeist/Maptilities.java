@@ -40,7 +40,7 @@ public class Maptilities
 	
 	public static String formatDateString(Date toFormat)
 	{
-		String pattern = "yyyy-MM-dd'T'hh:mm:ss"; 
+		String pattern = "yyyy/MM/dd HH:mm:ss 'GMT-0700'";
 		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 		return formatter.format(toFormat);
 	}

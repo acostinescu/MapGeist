@@ -22,7 +22,9 @@ public class EventDAO
 			{
 				return extractEvent(rs);
 			}
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			ex.printStackTrace();
 		}
 		return null;
@@ -47,7 +49,9 @@ public class EventDAO
 			{
 				return eventList;
 			}
-		} catch(SQLException ex) {
+		}
+		catch(SQLException ex)
+		{
 			ex.printStackTrace();
 		}
 		return null;
@@ -62,37 +66,34 @@ public class EventDAO
 		PreparedStatement stmt2;
 		PreparedStatement stmt3;
 		
-		try {
+		try
+		{
 			stmt = conn.prepareStatement("UPDATE Event SET ReviewedBy=? WHERE queued = 0 AND reviewedBy IS NULL AND approved IS NULL LIMIT ?");
 			stmt.setString(1, modID);
 			stmt.setInt(2, eventsToGet);
-			
-			
-			int rowUpdated = stmt.executeUpdate();
-			System.out.println(rowUpdated);
-			
+			stmt.executeUpdate();
+
 			stmt2 = conn.prepareStatement("SELECT * FROM Event WHERE queued = 0 AND reviewedBy = ?");
 			stmt2.setString(1, modID);
-			
 			ResultSet resultSet = stmt2.executeQuery();
-			
-			while (resultSet.next()) {
+			while (resultSet.next())
+			{
 	        	Event queriedEvent = extractEvent(resultSet);
 	        	newModeratorEvents.add(queriedEvent);
 	        }
 			
 			stmt3 = conn.prepareStatement("UPDATE Event SET queued=1 WHERE queued = 0 AND reviewedBy = ?");
 			stmt3.setString(1, modID);
+			stmt3.executeUpdate();
 			
-			int rowUpdated2 = stmt3.executeUpdate();
-			System.out.println(rowUpdated2);
-			
-			if (newModeratorEvents.size() > 0) {
+			if (newModeratorEvents.size() > 0)
+			{
 				return newModeratorEvents;
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 		
@@ -100,27 +101,33 @@ public class EventDAO
 		
 	}
 	
-	public static List<Event> getQueuedModeratorEvents(String modID){
+	public static List<Event> getQueuedModeratorEvents(String modID)
+	{
 		Connection conn = Connector.getConnection();
 		
 		List<Event> queuedEvents = new ArrayList<Event>();
 		
-		try {
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM EVENT WHERE queued = 1 AND reviewedBy = ? AND approved IS NULL");
+		try
+		{
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM EVENT WHERE queued=1 AND reviewedBy=? AND approved IS NULL");
 	        stmt.setString(1, modID);
 			
 	        ResultSet resultSet = stmt.executeQuery();
 	        
-	        while (resultSet.next()) {
+	        while (resultSet.next())
+	        {
 	        	Event queriedEvent = extractEvent(resultSet);
 	        	queuedEvents.add(queriedEvent);
 	        }
 	        
-	        if(queuedEvents.size() > 0) {
+	        if(queuedEvents.size() > 0)
+	        {
 	        	return queuedEvents;
 	        }
 		 
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			ex.printStackTrace();
 		}
         
@@ -146,7 +153,9 @@ public class EventDAO
 			{
 				return eventList;
 			}
-		} catch(SQLException ex) {
+		}
+		catch(SQLException ex)
+		{
 			ex.printStackTrace();
 		}
 		return null;
@@ -159,14 +168,17 @@ public class EventDAO
 		try
 		{
 			Statement stmt = conn.createStatement();
-			int success = stmt.executeUpdate("DELETE FROM Event WHERE id=" + id.toString());
+			int success = stmt.executeUpdate("DELETE FROM Event WHERE id='" + id.toString() + "'");
 			if(success == 1)
 			{
 				return true;
 			}
-		} catch (SQLException ex) {
+		}
+		catch (SQLException ex)
+		{
 			ex.printStackTrace();
 		}
+		
 		return false;
 	}
 	
@@ -199,7 +211,9 @@ public class EventDAO
             	return true;
             }
             
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
         
@@ -241,7 +255,9 @@ public class EventDAO
             	return true;
             }
     		
-    	} catch (SQLException ex) {
+    	}
+    	catch (SQLException ex)
+    	{
     		ex.printStackTrace();
     	}
     	return false;

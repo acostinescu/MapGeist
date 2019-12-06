@@ -206,6 +206,7 @@ public class Event
 			eventMap.put("longitude", Double.toString(e.getLongitude()));
 			eventMap.put("email", e.getEmailAddress());
 			eventMap.put("starttime", Maptilities.formatDateString(e.getStartTime()));
+			System.out.println(eventMap.get("starttime"));
 			eventMap.put("approved", e.isApproved());
 			eventMap.put("queued", e.isQueued());
 			
