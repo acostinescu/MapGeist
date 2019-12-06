@@ -85,7 +85,7 @@
 		    		listItem.dataset.eventid = eventArr[i].id;
 		    		
 		    		// Set hover
-		    		setEventListHover(listItem);
+		    		setEventListHover(listItem, map, markers);
 		    		
 		    		// Event title
 		    		var eventTitle = document.createElement("h3");

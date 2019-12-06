@@ -6,7 +6,7 @@ L.Marker.include({
 	}
 });
 
-function setEventListHover(listItem) {
+function setEventListHover(listItem, map, markers) {
 	listItem.onmouseenter = function() {
 		
 		var id = this.getAttribute("data-eventid");
@@ -16,6 +16,7 @@ function setEventListHover(listItem) {
 		if(eventMarker != null) {
 			eventMarker.style["transform"] += " translateY(-100%) translateX(-50%) scale(2)";
 			eventMarker.style["filter"] = "hue-rotate(250deg)"; 
+			map.setView(markers[id].getLatLng(), 15);
 		}
 	}
 	

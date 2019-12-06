@@ -16,8 +16,7 @@ public class Moderator
 	
 	public Moderator()
 	{
-		// Generate random UUID
-		this.id = UUID.randomUUID().toString();
+		
 	}
 	public Moderator(String username, String password, String firstName, String lastName)
 	{

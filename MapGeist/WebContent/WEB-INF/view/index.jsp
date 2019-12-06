@@ -117,16 +117,16 @@
 		    xhttp.open("GET", "${activeEvents}", true);
 		    xhttp.send();
 		    
-		    
+		    var markers = {};
 		    // Add the requested events to the map
 		    function addEventMarkers(eventArr){
 		    	var eventList = document.createElement("ul");
 		    	eventList.className = "event-list";		    	
 		    	for(var i = 0; i < eventArr.length; i++){
-	    			var marker = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
+					markers[eventArr[i].id] = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
 		    		
-		    		marker.setEventId(eventArr[i].id);
-		    		
+		    		markers[eventArr[i].id].setEventId(eventArr[i].id);
+		    				    		
 		    		// Create li container
 		    		var listItem = document.createElement("li");
 		    		listItem.className = "event-item";
@@ -135,7 +135,7 @@
 		    		listItem.dataset.eventid = eventArr[i].id;
 		    		
 		    		// Set hover
-		    		setEventListHover(listItem);
+		    		setEventListHover(listItem, map, markers);
 		    		
 		    		// Event title
 		    		var eventTitle = document.createElement("h3");
