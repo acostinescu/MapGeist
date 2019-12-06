@@ -63,16 +63,16 @@ public class EventDAO
 		PreparedStatement stmt3;
 		
 		try {
-			stmt = conn.prepareStatement("UPDATE TOP ? FROM EVENT WHERE queued = 0 AND reviewedBy = null SET ReviewedBy=?");
-			stmt.setInt(1, eventsToGet);
-			stmt.setString(2, modID);
+			stmt = conn.prepareStatement("UPDATE Event SET ReviewedBy=? WHERE queued = 0 AND reviewedBy IS NULL AND approved IS NULL LIMIT ?");
+			stmt.setString(1, modID);
+			stmt.setInt(2, eventsToGet);
+			
 			
 			int rowUpdated = stmt.executeUpdate();
 			System.out.println(rowUpdated);
 			
-			stmt2 = conn.prepareStatement("SELECT TOP ? FROM EVENT WHERE queued = 0 AND reviewedBy = ?");
-			stmt2.setInt(1, eventsToGet);
-			stmt2.setString(2, modID);
+			stmt2 = conn.prepareStatement("SELECT * FROM Event WHERE queued = 0 AND reviewedBy = ?");
+			stmt2.setString(1, modID);
 			
 			ResultSet resultSet = stmt2.executeQuery();
 			
@@ -81,9 +81,8 @@ public class EventDAO
 	        	newModeratorEvents.add(queriedEvent);
 	        }
 			
-			stmt3 = conn.prepareStatement("UPDATE TOP ? FROM EVENT WHERE queued = 0 AND reviewedBy = ? SET queued=1");
-			stmt3.setInt(1, eventsToGet);
-			stmt3.setString(2, modID);
+			stmt3 = conn.prepareStatement("UPDATE Event SET queued=1 WHERE queued = 0 AND reviewedBy = ?");
+			stmt3.setString(1, modID);
 			
 			int rowUpdated2 = stmt3.executeUpdate();
 			System.out.println(rowUpdated2);
@@ -107,7 +106,7 @@ public class EventDAO
 		List<Event> queuedEvents = new ArrayList<Event>();
 		
 		try {
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM EVENT WHERE queued = 1 AND reviewedBy = ?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM EVENT WHERE queued = 1 AND reviewedBy = ? AND approved IS NULL");
 	        stmt.setString(1, modID);
 			
 	        ResultSet resultSet = stmt.executeQuery();
@@ -120,7 +119,7 @@ public class EventDAO
 	        if(queuedEvents.size() > 0) {
 	        	return queuedEvents;
 	        }
-		
+		 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

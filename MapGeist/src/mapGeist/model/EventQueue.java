@@ -11,8 +11,17 @@ public class EventQueue {
 		
 		eventList = EventDAO.getQueuedModeratorEvents(mod.getID());
 		
-		if (eventList !=null && eventList.size() < 5 ) {
-			List<Event> newEventList = EventDAO.getNewModeratorEventsForApproval(mod.getID(), 5-eventList.size());
+		if (eventList == null || eventList.size() < 5 ) {
+			int eventsToGet = 5;
+			if(eventList == null) {
+				eventsToGet = 5;
+				eventList = new ArrayList<Event>();
+			}
+			else {
+				eventsToGet = 5-eventList.size();
+			}
+			List<Event> newEventList = EventDAO.getNewModeratorEventsForApproval(mod.getID(), eventsToGet);
+			System.out.println(newEventList);
 			eventList.addAll(newEventList);
 		}
 		
