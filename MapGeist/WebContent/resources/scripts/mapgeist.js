@@ -32,6 +32,39 @@ function setEventListHover(listItem, map, markers) {
 	}
 }
 
+function setMarkerHover(marker){
+	marker.on("mouseover", function(){
+		var id = this._icon.dataset.eventid;
+		var selector = "li[data-eventid='" + id + "']";
+		
+		var eventItem = document.querySelector(selector);
+		if(eventItem != null) {
+			eventItem.className += " item__hover";
+		}
+		
+		var sidebarScroll = document.querySelector("#scroll");
+		if(sidebarScroll.scrollHeight > sidebarScroll.clientHeight){
+			sidebarScroll.scrollTop = eventItem.offsetTop - 20;
+		}
+		
+		
+		this._icon.style["transform"] += " translateY(-100%) translateX(-50%) scale(2)";
+		this._icon.style["filter"] = "hue-rotate(250deg)"; 
+	});
+	marker.on("mouseout", function(){
+		var id = this._icon.dataset.eventid;
+		var selector = "li[data-eventid='" + id + "']";
+		
+		var eventItem = document.querySelector(selector);
+		if(eventItem != null) {
+			eventItem.className = eventItem.className.replace(" item__hover", "");
+		}
+		 
+		this._icon.style["transform"] = this._icon.style["transform"].replace(" translateY(-100%) translateX(-50%) scale(2)", "");
+		this._icon.style["filter"] = ""; 
+	})
+}
+
 Date.prototype.getShortTime = function() {
 	var hh = this.getHours();
 	var mm = this.getMinutes();

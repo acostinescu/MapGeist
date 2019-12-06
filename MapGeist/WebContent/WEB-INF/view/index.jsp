@@ -62,8 +62,10 @@
 				<img class="mapgeist--logo" src="<c:url value="/resources/images/logo.svg" />" />
 			</section>
 			<section class="sidebar">
-				
-				<div class="sidebar--scroll">
+				<div class="sidebar--static">
+					<h2 class="sidebar--title">Upcoming Events</h2>
+				</div>
+				<div class="sidebar--scroll" id="scroll">
 					<div id="eventBar"></div>
 				</div>
 			</section>
@@ -73,10 +75,9 @@
 		
 	  	<script type="text/javascript">
 	  	
-	  	
+	  		// DateTime Pickers
 		  	tail.DateTime("#StartTime", {});
 		    tail.DateTime("#EndTime", {});
-	  	
 	  	
 	  		// Create a Leaflet map centered on Boulder
 		  	var map = L.map('leafletMap', {
@@ -89,8 +90,6 @@
 		        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://mapbox.com">Mapbox</a>',
 		        id: 'mapbox.streets'
 		    }).addTo(map);
-		 	
-	  		
 		    
 		    // Add marker and pop open dialog on click
 		    var popupForm = document.createElement('div');
@@ -110,9 +109,11 @@
 		    		marker.remove(map);
 		    	}
 		    }
-		    
 		    map.on("dblclick", onMapClick);
 
+		    
+		    
+		    
 		    // Request the active events from the server
 		    var xhttp = new XMLHttpRequest();
 		    xhttp.onreadystatechange = function(){
@@ -130,9 +131,11 @@
 		    	var eventList = document.createElement("ul");
 		    	eventList.className = "event-list";		    	
 		    	for(var i = 0; i < eventArr.length; i++){
-					markers[eventArr[i].id] = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
 		    		
+		    		// Create the marker and set its hover behavior
+					markers[eventArr[i].id] = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
 		    		markers[eventArr[i].id].setEventId(eventArr[i].id);
+		    		setMarkerHover(markers[eventArr[i].id]);
 		    				    		
 		    		// Create li container
 		    		var listItem = document.createElement("li");
@@ -172,6 +175,9 @@
 		    	document.getElementById("eventBar").append(eventList);
 		    }
 
+		    
+		    
+		    
 		    // Submit the new event form
 		    function submitNewEvent(e){
 		    	var form = document.querySelector("#newEvent");
@@ -191,12 +197,26 @@
 		    	request.onreadystatechange = function(){
 			    	if (this.readyState == 4 && this.status == 200) {
 			    		createAlert("Your event was successfully submitted for approval! Our moderators will get to it... eventually.", "success");			    
+			    		if(marker != null){
+			    			marker.remove(map);
+			    			clearForm();
+			    		}
 			    	}
 			    }
 		    	
 		    	request.open("POST", "${newEvent}", true);
 		    	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		    	request.send(formattedData);
+		    }
+		    
+		    
+		    function clearForm(){
+		    	var form = document.querySelector("#newEvent");
+		    	var formElements = form.querySelectorAll("input");
+		    	
+		    	for(var formElem of formElements){
+		    		formElem.value = "";
+		    	}
 		    }
 		    
 	  	</script>

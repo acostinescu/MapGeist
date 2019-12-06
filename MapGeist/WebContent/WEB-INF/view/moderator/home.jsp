@@ -29,11 +29,11 @@
 			<section class="sidebar">
 				
 				<div class="sidebar--static">
-					${message} 
+					<h2 class="sidebar--title">${message}</h2>
 					<a class="btn" href="<c:url value="/login?logout" />">Log out</a> 
 				</div>
 				
-				<div class="sidebar--scroll">
+				<div class="sidebar--scroll" id="scroll">
 					<div id="eventBar"></div>
 				</div>
 			</section>
@@ -73,9 +73,10 @@
 		    	
 		    	for(var i = 0; i < eventArr.length; i++){
 		    		
-		    		markers[eventArr[i].id] = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
-		    		
+		    		// Create the marker and set its hover behavior
+					markers[eventArr[i].id] = L.marker([eventArr[i].latitude, eventArr[i].longitude]).addTo(map);
 		    		markers[eventArr[i].id].setEventId(eventArr[i].id);
+		    		setMarkerHover(markers[eventArr[i].id]);
 		    		
 		    		// Create li container
 		    		var listItem = document.createElement("li");
