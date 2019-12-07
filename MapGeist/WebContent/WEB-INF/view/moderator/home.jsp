@@ -4,19 +4,25 @@
 
 <html> 
 	<head>
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-		   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-		   crossorigin=""/>
+		<title>MapGeist - Moderator</title>
+		
+		<!-- FontAwesome -->
+		<script src="https://kit.fontawesome.com/2d5aa19ad7.js" crossorigin="anonymous"></script>
+
+		<!-- Leaflet -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+
+	   	<!-- tail.DateTime -->
+		<script src="<c:url value="/resources/scripts/tail.datetime-full.min.js"/>"></script> 
+	  	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/styles/tail.datetime-default-green.min.css" />" />
 		   
-	 	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-		   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-		   crossorigin=""></script>
+		<!-- Favicon -->   
+		<link rel="shortcut icon" href="<c:url value="/resources/images/favicon.ico"/>" />
 		   
-		   
-	   	<link rel="stylesheet" href="<c:url value="/resources/styles/styles.css"  />" />
-	   	<link rel="shortcut icon" href="<c:url value="/resources/images/favicon.ico"/>" />
-	   	
-	   	<script src="<c:url value="/resources/scripts/mapgeist.js"  />" type="text/javascript"></script>
+	   	<!-- MapGeist Resources -->
+		<link rel="stylesheet" href="<c:url value="/resources/styles/styles.css?v=2"  />" />
+		<script src="<c:url value="/resources/scripts/mapgeist.js"  />" type="text/javascript"></script>
 	</head> 
 	<body>
 		
@@ -100,12 +106,14 @@
 		    		
 		    		// Event location
 		    		var eventLocation = document.createElement("p");
-		    		eventLocation.innerText = eventArr[i].location; 
+		    		eventLocation.className = "event--info";
+		    		eventLocation.innerHTML = '<i class="event--icon fas fa-map-marker-alt"></i>' + eventArr[i].location; 
 		    		listItem.append(eventLocation);
 		    		
 		    		// Event time
 		    		var eventTime = document.createElement("p");
-		    		eventTime.innerText = formatDateTime(eventArr[i].starttime, eventArr[i].endtime);
+		    		eventTime.className = "event--info";
+		    		eventTime.innerHTML = '<i class="event--icon fas fa-clock"></i>' + formatDateTime(eventArr[i].starttime, eventArr[i].endtime);
 		    		listItem.append(eventTime);
 		    		
 		    		// Buttons

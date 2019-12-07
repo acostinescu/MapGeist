@@ -44,7 +44,7 @@ function setMarkerHover(marker){
 		
 		var sidebarScroll = document.querySelector("#scroll");
 		if(sidebarScroll.scrollHeight > sidebarScroll.clientHeight){
-			sidebarScroll.scrollTop = eventItem.offsetTop - 20;
+			sidebarScroll.scrollTop = eventItem.offsetTop - eventItem.offsetHeight;
 		}
 		
 		
