@@ -9,7 +9,12 @@ import mapGeist.Maptilities;
 
 public class ModeratorDAO
 {
-	public static Moderator getModerator(UUID id)
+	/**
+	 * Get a Moderator with the given ID from the database.
+	 * @param id the Moderator's ID.
+	 * @return the retrieved Moderator, or null if none exist with the given ID.
+	 */
+	public static Moderator getModeratorByID(String id)
 	{
 		Connection conn = Connector.getConnection();
 		try
@@ -27,7 +32,13 @@ public class ModeratorDAO
 		}
 		return null;
 	}
-	public static Moderator getModerator(String username)
+	
+	/**
+	 * Get a Moderator with the given username from the database.
+	 * @param username the Moderator's username.
+	 * @return the retrieved Moderator, or null if none exist with the given username.
+	 */
+	public static Moderator getModeratorByUsername(String username)
 	{
 		Connection conn = Connector.getConnection();
 		try
@@ -45,6 +56,10 @@ public class ModeratorDAO
 		return null;
 	}
 	
+	/**
+	 * Get all Moderators in the database.
+	 * @return the list of Moderators or null if there are none.
+	 */
 	public static List<Moderator> getAllModerators()
 	{
 		Connection conn = Connector.getConnection();
@@ -70,9 +85,15 @@ public class ModeratorDAO
 		return null;
 	}
 	
+	/**
+	 * Attempt to log in a Moderator with the given username and password.
+	 * @param username the Moderator's username.
+	 * @param password the Moderator's password.
+	 * @return the Moderator if the username and password are correct, null otherwise
+	 */
 	public static Moderator attemptLogin(String username, String password)
 	{
-		Moderator logMeIn = getModerator(username);
+		Moderator logMeIn = getModeratorByUsername(username);
 		if(logMeIn != null)
 		{
 			String encryptedPassword = Maptilities.encryptPassword(password, logMeIn.getSalt());
@@ -85,7 +106,12 @@ public class ModeratorDAO
 		return null;
 	}
 	
-	public static boolean deleteModerator(UUID id)
+	/**
+	 * Delete a Moderator from the database with the given ID.
+	 * @param id the ID of the Moderator to delete.
+	 * @return true if the Moderated existed and was successfully deleted, false otherwise.
+	 */
+	public static boolean deleteModerator(String id)
 	{
 		Connection conn = Connector.getConnection();
 		
@@ -103,6 +129,11 @@ public class ModeratorDAO
 	    return false;
 	}
 	
+	/**
+	 * Insert a Moderator into the database.
+	 * @param mod the Moderator to insert.
+	 * @return true if the Moderator was successfully inserted, false otherwise.
+	 */
 	public static boolean insertModerator(Moderator mod)
 	{
 		Connection conn = Connector.getConnection();
@@ -127,6 +158,11 @@ public class ModeratorDAO
 	    return false;
 	}
 	
+	/**
+	 * Update a Moderator in the database.
+	 * @param mod the Moderator to update.
+	 * @return true if the Moderator exists and was updated, false otherwise.
+	 */
 	public static boolean updateModerator(Moderator mod)
 	{
 		Connection conn = Connector.getConnection();
@@ -151,6 +187,12 @@ public class ModeratorDAO
 		return false;
 	}
 	
+	/**
+	 * Extract a Moderator from a ResutSet.
+	 * @param rs the ResultSet to extract the Moderator from.
+	 * @return the extracted Moderator.
+	 * @throws SQLException
+	 */
 	private static Moderator extractModerator(ResultSet rs) throws SQLException
 	{
 		String id = rs.getString("id");

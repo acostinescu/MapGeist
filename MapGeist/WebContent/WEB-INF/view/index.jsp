@@ -27,7 +27,7 @@
 
 		<div id="input-container">
 			<h3 class="popup--title">Add Event</h3>
-			<form id='newEvent' action="<c:url var="newEvent" value="/NewEventSubmit" />" method="POST">
+			<form id='newEvent' action="<c:url var="newEvent" value="/Event/new" />" method="POST">
 				<div class="form--group">
 					<input class="form--control" type="text" id="Title" placeholder="Title" name="Title">
 				</div> 

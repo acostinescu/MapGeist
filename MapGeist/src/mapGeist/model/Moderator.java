@@ -13,10 +13,10 @@ public class Moderator
 	private String firstName;
 	private String lastName;
 	
-	
 	public Moderator()
 	{
-		
+		// Generate random UUID
+		this.id = UUID.randomUUID().toString();
 	}
 	public Moderator(String username, String password, String firstName, String lastName)
 	{
@@ -78,16 +78,23 @@ public class Moderator
 	{
 		this.lastName = lastName;
 	}
+	
+	/**
+	 * Get the Moderator's full name (first and last)
+	 * @return the Moderator's full name
+	 */
 	public String getFullName()
 	{
 		return this.firstName + " " + this.lastName;
 	}
 	
+	/**
+	 * Get the salt for the Moderator's password.
+	 * @return the salt
+	 */
 	public String getSalt()
 	{
 		// The salt is the first 4 characters of the UUID
 		return this.id.toString().substring(0, 3);
 	}
-	
-	
 }

@@ -1,10 +1,7 @@
 package mapGeist.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -13,9 +10,6 @@ import org.json.JSONObject;
 import mapGeist.Maptilities;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;  
-import java.text.SimpleDateFormat;  
-import java.util.Calendar;
 
 public class Event
 {
@@ -169,17 +163,31 @@ public class Event
     	return this.reviewedBy;
     }
     
-    public void addToModeratorQueue(String moderatorID)
+    /**
+     * Add the event to a Moderator's working queue
+     * @param mod the Moderator whose queue the event is being added to
+     */
+    public void addToModeratorQueue(Moderator mod)
     {
         this.queued = true;
-        this.reviewedBy = moderatorID;
+        this.reviewedBy = mod.getID();
     }
+    
+    /**
+     * Approve the Event
+     * @param mod the Moderator approving the Event
+     */
     public void approve(Moderator mod)
     {
         this.approved = true;
         this.reviewedBy = mod.getID();
         this.dateReviewed = new Date();
     }
+    
+    /**
+     * Deny the Event
+     * @param mod the Moderator denying the Event
+     */
     public void deny(Moderator mod)
     {
         this.approved = false;
@@ -187,16 +195,17 @@ public class Event
         this.dateReviewed = new Date();
     }
     
+    /**
+     * Convert a list of Events to JSON format with only the necessary info to display
+     * @param eventList the list of Events to convert
+     * @return the converted Events
+     */
     public static JSONArray eventListToJson(List<Event> eventList)
     {
     	JSONArray response = new JSONArray();
-    	String pattern = "MM/dd/yyyy HH:mm:ss";
-    	
     	for(Event e : eventList)
 		{
 			JSONObject eventMap = new JSONObject();
-			
-			DateFormat df = new SimpleDateFormat(pattern);
 			
 			eventMap.put("id", e.getID().toString());
 			eventMap.put("title", e.getTitle());
@@ -206,9 +215,6 @@ public class Event
 			eventMap.put("longitude", Double.toString(e.getLongitude()));
 			eventMap.put("email", e.getEmailAddress());
 			eventMap.put("starttime", Maptilities.formatDateString(e.getStartTime()));
-			eventMap.put("approved", e.isApproved());
-			eventMap.put("queued", e.isQueued());
-			
 			
 			if(e.getEndTime() != null)
 			{
@@ -219,34 +225,8 @@ public class Event
 				eventMap.put("endtime", "null");
 			}
 			
-			if(e.getDateReviewed() != null) 
-			{
-				eventMap.put("date_reviewed", df.format(e.getDateReviewed()));
-			}
-			else
-			{
-				eventMap.put("date_reviewed", "null");
-			}
-			
-			eventMap.put("date_submitted", df.format(e.getDateSubmitted()));
-			
 			response.put(eventMap);
 		}
     	return response;
     }
-    
-    public static JSONArray getEventsJson()
-	{
-		List<Event> eventList = EventDAO.getAllEvents();		
-		return eventListToJson(eventList);
-	}
-    
-    public static JSONArray getActiveMapEventsJson()
-	{
-		List<Event> eventList = EventDAO.getAllActiveEvents();
-		if(eventList != null) {
-			return eventListToJson(eventList);
-		}
-		return null;
-	}
 }

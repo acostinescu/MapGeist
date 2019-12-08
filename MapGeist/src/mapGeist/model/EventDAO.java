@@ -3,13 +3,15 @@ package mapGeist.model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.Date;
-import java.util.HashMap;
 
 public class EventDAO
 {
+	/**
+	 * Retrieve an Event from the database with the given ID
+	 * @param id the ID of the Event being retrieved
+	 * @return the Event, or null if none exist
+	 */
 	public static Event getEvent(String id)
 	{
 		Connection conn = Connector.getConnection();
@@ -30,6 +32,10 @@ public class EventDAO
 		return null;
 	}
 	
+	/**
+	 * Get all events in the database
+	 * @return the list of Events in the database, or null if there are none.
+	 */
 	public static List<Event> getAllEvents()
 	{
 		Connection conn = Connector.getConnection();
@@ -57,6 +63,12 @@ public class EventDAO
 		return null;
 	}
 	
+	/**
+	 * Add eventsToGet events to the Moderator's working queue and get those Events from the database.
+	 * @param modID the Moderator's ID.
+	 * @param eventsToGet the number of events to add to the Moderator's working queue.
+	 * @return the added Events, or null if none were added.
+	 */
 	public static List<Event> getNewModeratorEventsForApproval(String modID, int eventsToGet){
 		Connection conn = Connector.getConnection();
 		
@@ -101,6 +113,11 @@ public class EventDAO
 		
 	}
 	
+	/**
+	 * Get the list of Events that the Moderator has in their working queue from the database.
+	 * @param modID the Moderator whose Events are being retrieved.
+	 * @return the list of Events, or null if there are none.
+	 */
 	public static List<Event> getQueuedModeratorEvents(String modID)
 	{
 		Connection conn = Connector.getConnection();
@@ -134,6 +151,10 @@ public class EventDAO
 		return null;
 	}
 	
+	/**
+	 * Get all active Events from the database. Active events are approved Events that are either ongoing or upcoming.
+	 * @return the list of Events, or null if there are none.
+	 */
 	public static List<Event> getAllActiveEvents()
 	{
 		Connection conn = Connector.getConnection();
@@ -161,14 +182,19 @@ public class EventDAO
 		return null;
 	}
 	
-	public static boolean deleteEvent(UUID id)
+	/**
+	 * Delete an Event from the database with the given ID
+	 * @param id the ID of the Event to remove
+	 * @return true if the Event existed was successfully removed, false otherwise
+	 */
+	public static boolean deleteEvent(String id)
 	{
 		Connection conn = Connector.getConnection();
 		
 		try
 		{
 			Statement stmt = conn.createStatement();
-			int success = stmt.executeUpdate("DELETE FROM Event WHERE id='" + id.toString() + "'");
+			int success = stmt.executeUpdate("DELETE FROM Event WHERE id='" + id + "'");
 			if(success == 1)
 			{
 				return true;
@@ -182,6 +208,11 @@ public class EventDAO
 		return false;
 	}
 	
+	/**
+	 * Insert an Event into the database
+	 * @param eve the Event to insert
+	 * @return true if the Event was successfully inserted, false otherwise
+	 */
     public static boolean insertEvent(Event eve)
     {
     	Connection conn = Connector.getConnection();
@@ -220,6 +251,11 @@ public class EventDAO
         return false;
     }
     
+    /**
+     * Update an Event in the database
+     * @param eve the Event to update
+     * @return true if the Event existed and was successfully updated, false otherwise
+     */
     public static boolean updateEvent(Event eve)
     {
     	Connection conn = Connector.getConnection();
@@ -263,6 +299,12 @@ public class EventDAO
     	return false;
     }
     
+    /**
+     * Extract an Event from a ResultSet
+     * @param rs the ResultSet to extract the Event from
+     * @return the extracted Event
+     * @throws SQLException
+     */
     private static Event extractEvent(ResultSet rs) throws SQLException
     {
     	String id = rs.getString("id");

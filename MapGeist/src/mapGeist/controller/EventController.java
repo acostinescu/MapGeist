@@ -1,45 +1,34 @@
 package mapGeist.controller;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 
 import mapGeist.model.*;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController 
-public class EventController {
+public class EventController
+{
 	
-	@RequestMapping(value = "/NewEventSubmit", method = { RequestMethod.POST })
+	/**
+	 * Add a new event
+	 */
+	@RequestMapping(value = "/Event/new", method = { RequestMethod.POST })
 	@ResponseStatus(value = HttpStatus.OK)
-	public void NewEventHandler(@RequestParam(value="Title", required=false) Optional<String> Title, 
+	public void newEvent(@RequestParam(value="Title", required=false) Optional<String> Title, 
 									  @RequestParam(value="Description", required=false) Optional<String> Description,
 									  @RequestParam(value="Location", required=false) Optional<String> Location,
 									  @RequestParam(value="StartTime", required=false) Optional<String> StartTime,
@@ -63,22 +52,32 @@ public class EventController {
 		return;
 	}
 	
+	/**
+	 * Get the list of active (approved/upcoming) Events
+	 */
 	@RequestMapping(value="/Event/active", method= {RequestMethod.GET}, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<String> getAllActiveEvents()
 	{
-		JSONArray response = Event.getActiveMapEventsJson();
-		if(response != null) {
+		
+		List<Event> activeEvents = EventDAO.getAllActiveEvents();
+		if(activeEvents != null)
+		{
+			JSONArray response = Event.eventListToJson(activeEvents);
 			return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
 		}
-		else {
+		else
+		{
 			return new ResponseEntity<String>("{}", HttpStatus.OK); 
 		}
 	}
 	
+	/**
+	 *  Get the list of queued Events for the logged in Moderator.
+	 */
 	@RequestMapping(value="/Event/queued", method= {RequestMethod.GET}, produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<String> getAllEvents(HttpServletRequest request)
+	public ResponseEntity<String> getQueuedEvents(HttpServletRequest request)
 	{
 		Moderator mod = (Moderator)request.getSession().getAttribute("loggedInUser");
 		if(mod != null) {
@@ -93,8 +92,11 @@ public class EventController {
 		return new ResponseEntity<String>("{}", HttpStatus.OK);
 	}
 	
+	/**
+	 * Review (approve/deny) an Event
+	 */
 	@RequestMapping(value="/Event/review")
-	public String reviewEvent(
+	public void reviewEvent(
 			@RequestParam(value="id") String id, 
 			@RequestParam(value="approved") boolean approved, 
 			HttpServletRequest request)
@@ -119,6 +121,5 @@ public class EventController {
 				EventDAO.updateEvent(toReview);
 			}
 		}
-		return "";
 	}
 }

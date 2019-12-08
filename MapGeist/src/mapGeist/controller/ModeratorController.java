@@ -2,14 +2,10 @@ package mapGeist.controller;
 
 import mapGeist.model.*;
 
-import java.util.Collection;
 import java.util.Optional;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ModeratorController
 {	
+	/**
+	 * Load the Moderator homepage
+	 */
 	@RequestMapping(value="/moderator/home")
 	public ModelAndView moderatorHome(HttpServletRequest request)
 	{
@@ -32,6 +31,9 @@ public class ModeratorController
 		} 
 	}
 	
+	/**
+	 * Handles logging in/out and the login page
+	 */
 	@RequestMapping(value="/login")
 	public ModelAndView login(
 			@RequestParam(value="username", required=false) Optional<String>  username, 
