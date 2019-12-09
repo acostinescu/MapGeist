@@ -1,7 +1,7 @@
 # MapGeist
 Developers: Alex Cosinescu, Lucas Sward, Ayden Blotnick.
 
-Setup Instructions: 
+Setup Instructions:
 1. Download an Apache Tomcat server from: https://tomcat.apache.org/download-80.cgi. 
 
 2.Follow the instillation instructions to create a functional 
