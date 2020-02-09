@@ -1,5 +1,5 @@
 # MapGeist
-**Alex Cosinescu, Lucas Sward, Ayden Blotnick.
+Alex Cosinescu, Lucas Sward, Ayden Blotnick.
 
 ## Setup Instructions:
 1. Download an Apache Tomcat server from: https://tomcat.apache.org/download-80.cgi. 
